@@ -117,7 +117,7 @@ const Page = () => {
   }, [setvidId, router]);
 
   return (
-    <div className="flex h-full w-screen bg-black  text-white max-md:h-screen">
+    <div className="flex h-full  bg-black  text-white max-md:h-screen">
       <div className="video flex h-full w-full flex-col space-y-4  p-8 md:w-3/4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">
@@ -150,7 +150,7 @@ const Page = () => {
         )}
         {/* {vidId.length == 11 && <Transcript transcripts={res} />} */}
 
-        <Tabs defaultValue="transcript" className="">
+        <Tabs defaultValue="transcript" className="w-full overflow-x-clip">
           <div className="flex items-center justify-between">
             <TabsList>
               <TabsTrigger value="transcript">Transcript</TabsTrigger>

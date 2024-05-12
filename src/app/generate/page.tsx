@@ -8,6 +8,10 @@ import { getVideoId } from "~/lib/helpers/other";
 import themeVideos from "./data";
 import Image from "next/image";
 import { useToast } from "~/components/ui/use-toast";
+import { HomeIcon } from "lucide-react";
+import { MdAccountCircle } from "react-icons/md";
+import Link from "next/link";
+import { auth } from "~/auth";
 
 const Page = () => {
   const router = useRouter();
@@ -41,7 +45,6 @@ const Page = () => {
 
 
 
-
   return (
     <div className="relative grid h-screen place-content-center gap-12 bg-black">
       {/* <div className="absolute left-0 top-0 h-screen w-screen bg-black opacity-50"> */}
@@ -50,6 +53,7 @@ const Page = () => {
         src={"/hero_bg.png"}
         alt="hero"
         fill
+        priority
         className="absolute z-10 h-full w-full opacity-30"
       />
       <Image
@@ -63,7 +67,11 @@ const Page = () => {
         className="z-20 gap-x-32"
         hideDetails={true}
       /> */}
-
+      <div className="absolute left-1/2 right-1/2 top-5 z-10 flex w-[90%] -translate-x-1/2 items-center justify-between px-5 *:text-4xl *:text-white md:w-3/4">
+        <Link href="/" className="border-2 rounded-full p-2">
+          <HomeIcon />
+        </Link>
+      </div>
       <div className="flex-col-center-center z-10 gap-5">
         <input
           type="text"

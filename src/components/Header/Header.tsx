@@ -36,7 +36,7 @@ const Header = async () => {
       </ul>
       <Button className="flex-center gap-5">
         {session?.userId ? (
-          <Link href="generate">{header.button.title}</Link>
+          <Link href={`/c/${session.userId}`}>{header.button.title}</Link>
         ) : (
           <Link href="/api/auth/signin">Sign in</Link>
         )}
