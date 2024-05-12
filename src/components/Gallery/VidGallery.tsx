@@ -24,7 +24,7 @@ const VidGallery = ({
 
   return (
     <div
-      className={`grid  w-full grid-cols-1 gap-8 overflow-scroll sm:grid-cols-2 md:grid-cols-3 lg:max-h-[80vh] lg:grid-cols-3 ${className}`}
+      className={`grid overflow-x-hidden  w-full grid-cols-1 gap-8 overflow-scroll sm:grid-cols-2 md:grid-cols-3 lg:max-h-[80vh] lg:grid-cols-3 ${className}`}
     >
       {videos.map(
         (video, index) => (
