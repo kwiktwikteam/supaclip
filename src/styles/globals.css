@@ -1,0 +1,216 @@
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 224 71.4% 4.1%;
+
+      --card: 0 0% 100%;
+      --card-foreground: 224 71.4% 4.1%;
+
+      --popover: 0 0% 100%;
+      --popover-foreground: 224 71.4% 4.1%;
+
+      --primary: 220.9 39.3% 11%;
+      --primary-foreground: 210 20% 98%;
+
+      --secondary: 220 14.3% 95.9%;
+      --secondary-foreground: 220.9 39.3% 11%;
+
+      --muted: 220 14.3% 95.9%;
+      --muted-foreground: 220 8.9% 46.1%;
+
+      --accent: 220 14.3% 95.9%;
+      --accent-foreground: 220.9 39.3% 11%;
+
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 210 20% 98%;
+
+      --border: 220 13% 91%;
+      --input: 220 13% 91%;
+      --ring: 224 71.4% 4.1%;
+
+      --radius: 0.5rem;
+    }
+
+    .dark {
+      --background: 224 71.4% 4.1%;
+      --foreground: 210 20% 98%;
+
+      --card: 224 71.4% 4.1%;
+      --card-foreground: 210 20% 98%;
+
+      --popover: 224 71.4% 4.1%;
+      --popover-foreground: 210 20% 98%;
+
+      --primary: 210 20% 98%;
+      --primary-foreground: 220.9 39.3% 11%;
+
+      --secondary: 215 27.9% 16.9%;
+      --secondary-foreground: 210 20% 98%;
+
+      --muted: 215 27.9% 16.9%;
+      --muted-foreground: 217.9 10.6% 64.9%;
+
+      --accent: 215 27.9% 16.9%;
+      --accent-foreground: 210 20% 98%;
+
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 20% 98%;
+
+      --border: 215 27.9% 16.9%;
+      --input: 215 27.9% 16.9%;
+      --ring: 216 12.2% 83.9%;
+    }
+  }
+
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
+  }
+
+
+
+@layer components{
+.w-responsive{
+    @apply w-[90%] lg:w-3/4 mx-auto;
+}
+.w-res-90 {
+    @apply w-[90%] mx-auto;
+}
+.h1-main{ 
+    @apply text-5xl md:text-6xl xl:text-8xl font-bold;
+}
+
+.text-purple{
+    @apply text-[#8830F7];
+}
+
+.bg-purple{
+    @apply bg-[#8830F7];
+}
+
+.bg-blue{
+    @apply bg-[#30C7F7];
+}
+
+.bg-light-blue{ 
+    @apply bg-[#4FBCFE];
+}
+
+.bg-lighter-blue {
+    @apply bg-[#CBEFFF];
+}
+
+.bg-pink{
+    @apply bg-[#F7A8D0];
+}
+
+.bg-light-pink{
+    @apply bg-[#FFE8F7];
+}
+
+.bg-lighter-pink{
+    @apply bg-[#FFF3FF];
+}
+
+.bg-darkBlue {
+    @apply bg-[#4C30F7];
+}
+.bg-light-darkBlue{
+    @apply bg-[#826EEF];
+}
+.bg-lighter-darkBlue{
+    @apply bg-[#AEA1F2];
+}
+
+.border-purple{
+    @apply border border-[#8830F7];
+}
+
+.bg-main {
+    @apply bg-[#1053F3];
+}
+.fill-main{
+    @apply fill-[#1053F3];
+}
+.text-main {
+    @apply text-[#1053F3];
+}
+.border-main{
+    @apply border border-[#1053F3];
+}
+.flex-center {
+    @apply flex items-center justify-center;
+}
+.flex-stretch-center{
+    @apply flex items-center justify-stretch;
+}    
+.flex-center-start{
+    @apply flex items-center justify-start;
+}
+
+.flex-center-end{
+    @apply flex items-center justify-end;
+}
+
+.flex-center-between{
+    @apply flex items-center justify-between;
+}
+
+.flex-center-around{
+    @apply flex items-center justify-around;
+}
+
+.flex-center-evenly{
+    @apply flex items-center justify-evenly;
+}
+
+
+.flex-col-center-start{
+    @apply flex flex-col items-center justify-start;
+}
+
+.flex-col-center-center{ 
+    @apply flex flex-col items-center justify-center;
+}
+
+.flex-col-center-end{
+    @apply flex flex-col items-center justify-end;
+}
+
+.flex-col-center-between{
+    @apply flex flex-col items-center justify-between;
+}
+
+.flex-col-center-around{
+    @apply flex flex-col items-center justify-around;
+}
+
+.flex-col-center-evenly{
+    @apply flex lex-col items-center justify-evenly;
+}
+
+.flex-col-start-start{
+    @apply flex flex-col items-start justify-start;
+}
+
+.absolute-v-center{
+    @apply absolute top-1/2 -translate-y-1/2;
+}
+.absolute-h-center{
+    @apply absolute left-1/2 right-1/2 -translate-x-1/2;
+}
+}
+
+
+
+.shadow-gray {
+        box-shadow: 0px -21px 30px 0px rgba(0, 0, 0, 0.1);
+}
