@@ -14,7 +14,7 @@ const prompt =
 export const textTotext =async (inp: string, para: string) =>{
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-  const finalPrompt = prompt + para + "Based on only this answer the following user input: " + inp;
+  const finalPrompt = prompt + para.slice(0,2500) + "Based on only this answer the following user input: " + inp;
   // console.log("Para", para)
   const result = await model.generateContent(finalPrompt);
   const response =result.response;

@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import { YoutubeTranscript } from "youtube-transcript";
 import { db } from "~/server/db";
 import { transcriptRows, transcriptions, users } from "~/server/db/schema";
-import fetchYoutubeMetadata from 'yt_metadata'
+// import fetchYoutubeMetadata from 'yt_metadata'
 
 
 // fetch transcription rows from database
