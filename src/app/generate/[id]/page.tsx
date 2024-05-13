@@ -14,8 +14,9 @@ export default async function  Page({ params } : { params: { id: string } }) {
     const session: {
       userId: string
     } = await auth();
+
     if (!session.userId ?? !session) {
-      return redirect("/api/auth/signin?callbackUrl=/generate");
+      return redirect("/api/auth/signin?callbackUrl=/generate/" + params.id);
     }
     
     const getTranscripts: {

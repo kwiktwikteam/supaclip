@@ -4,6 +4,7 @@ import content from "~/config/content";
 import Image from "next/image";
 import Button from "../ui/Button";
 import { ArrowRight } from "lucide-react";
+import SearchButton from "./SearchButton";
 
 const Hero = () => {
   const { hero } = content.home;
@@ -53,10 +54,7 @@ const Hero = () => {
         {hero.title[1]}
       </Title>
 
-      <div className="relative bg-white/50 shadow-md w-[90%] md:w-[425px] mx-auto  py-2 text-center rounded-full">
-        Enter youtube video url to get started
-        <ArrowRight className="text-3xl absolute right-5 top-1/2 bottom-1/2 -translate-y-1/2" />
-      </div>
+      <SearchButton />
 
       <SubTitle subTitleClass="xl:w-1/3 xl:mx-auto">{hero.subtitle}</SubTitle>
 

@@ -29,12 +29,12 @@ const content = {
                     "url": "#testimonials",
                     "active": false
                 },
-                {
-                    "id": 5,
-                    "title": "Chrome extension",
-                    "url": "#extension",
-                    "active": false
-                }
+                // {
+                //     "id": 5,
+                //     "title": "Chrome extension",
+                //     "url": "#extension",
+                //     "active": false
+                // }
             ],
             "button": 
                 {

@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, {useState } from "react";
+import React, {useState, useEffect } from "react";
 import Button from "~/components/ui/Button";
 // import { getVideoId } from "~/lib/helpers/other";
 import Image from "next/image";
 import { useToast } from "~/components/ui/use-toast";
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { fetchVideoId } from "~/lib/helpers/transcript";
 
 const Page = () => {
@@ -15,6 +16,9 @@ const Page = () => {
   const [videoUrl, setvideoUrl] = useState("");
   const [vidId, setvidId] = useState("")
   const { toast } = useToast();
+
+  const searchParams = useSearchParams();
+
   const handleSubmit = async () => {
     // router 
     if(!videoUrl){
@@ -49,6 +53,14 @@ const Page = () => {
     router.push("/generate/" + vidId);
   }
 
+
+  useEffect(() => {
+    const q = searchParams.get("q");
+
+    if(q) {
+      setvideoUrl(q);
+    }
+  }, [])
 
 
   return (
