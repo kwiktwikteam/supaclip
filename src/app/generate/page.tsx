@@ -2,16 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import React, {useState } from "react";
-import VidGallery from "~/components/Gallery/VidGallery";
 import Button from "~/components/ui/Button";
-import { getVideoId } from "~/lib/helpers/other";
-import themeVideos from "./data";
+// import { getVideoId } from "~/lib/helpers/other";
 import Image from "next/image";
 import { useToast } from "~/components/ui/use-toast";
 import { HomeIcon } from "lucide-react";
-import { MdAccountCircle } from "react-icons/md";
 import Link from "next/link";
-import { auth } from "~/auth";
+import { fetchVideoId } from "~/lib/helpers/transcript";
 
 const Page = () => {
   const router = useRouter();
@@ -28,8 +25,14 @@ const Page = () => {
       return;
     } 
     if(videoUrl.length > 11){
-      const id = getVideoId(videoUrl);
-      console.log(id)
+      const id = await fetchVideoId(videoUrl);
+      if(!id){
+        toast({
+          title: "Please Enter a Valid Video URL or ID"
+        });
+        setvideoUrl("")
+        return;
+      } 
       setvidId(id);
     } else {
       setvidId(videoUrl);
@@ -39,6 +42,9 @@ const Page = () => {
       title: "Generating SupaClip Page",
       description: "Please wait while we generate webpage for your video. If nothing happens for 5-10 seconds please press again.",
     })
+
+
+    // console.log(set)
     
     router.push("/generate/" + vidId);
   }

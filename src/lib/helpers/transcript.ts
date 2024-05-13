@@ -6,7 +6,13 @@ import { eq } from "drizzle-orm";
 import { YoutubeTranscript } from "youtube-transcript";
 import { db } from "~/server/db";
 import { transcriptRows, transcriptions, users } from "~/server/db/schema";
-// import fetchYoutubeMetadata from 'yt_metadata'
+import getVideoId from 'get-video-id';
+
+export const fetchVideoId = async(url: string) => {
+  const { id } = await getVideoId(url)
+  console.log(id)
+  return id;
+}
 
 
 // fetch transcription rows from database

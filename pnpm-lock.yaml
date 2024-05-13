@@ -38,6 +38,9 @@ importers:
       drizzle-orm:
         specifier: ^0.29.5
         version: 0.29.5(@types/react@18.3.2)(pg@8.11.5)(postgres@3.4.4)(react@18.2.0)
+      get-video-id:
+        specifier: ^4.1.5
+        version: 4.1.5
       lucide-react:
         specifier: ^0.378.0
         version: 0.378.0(react@18.2.0)
@@ -1698,6 +1701,10 @@ packages:
 
   get-tsconfig@4.7.5:
     resolution: {integrity: sha512-ZCuZCnlqNzjb4QprAzXKdpp/gh6KTxSJuw3IBsPnV/7fV4NxC9ckB+vPTt8w7fJA0TaSD7c55BR47JD6MEDyDw==}
+
+  get-video-id@4.1.5:
+    resolution: {integrity: sha512-a8kerYWxYkNJSJJ0m78AMBKgrNeGa7J2POHnWFXYbrehdjUkW4LkIw4Pz2mGxDgYrmbcuZTcpBHNU/TYY6fg/A==}
+    engines: {node: '>=16'}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -4654,6 +4661,10 @@ snapshots:
   get-tsconfig@4.7.5:
     dependencies:
       resolve-pkg-maps: 1.0.0
+
+  get-video-id@4.1.5:
+    dependencies:
+      '@babel/runtime': 7.24.5
 
   glob-parent@5.1.2:
     dependencies:
