@@ -1,38 +1,106 @@
-import React from 'react'
+"use client"
+
+import { useState } from 'react'
 import Title, { SubTitle } from '../ui/Title'
 import content from '~/config/content'
 import Image from 'next/image'
+import { joinWaitlist } from '~/lib/helpers/waitlist'
+import { useToast } from '../ui/use-toast'
 
 
 const Subscribe = () => {
     const { subscribe } = content.home;
-    
+
+    const [email, setemail] = useState("")
+    const { toast } = useToast()
+    const handleSubmit = async () => {
+        if(!email.toString().includes("@")){ 
+            toast({
+                title: "Please Enter a Valid Email"
+            })
+            setemail("")
+            return;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const res: {
+            success: boolean;
+            id: string;
+        } = await joinWaitlist(email);
+        if(res?.success) {
+            toast({
+              title: "Subscribed",
+              description:
+                "You have been successfully subscribed to our waitlist. We will notify you when we launch.",
+            });
+            setemail("");
+            return;
+        } else {
+            toast({
+                title: "Error Occured!",
+                description: "Please try again."
+            })
+            setemail("");
+            return;
+        }
+    }
     
     return (
-        <div className='relative w-responsive bg-[#F7F1FF] py-12 px-5 rounded-xl space-y-5 text-center'>
-            {/* ICONS */}
-            <Image src={"/icons/decorations/icon-1.svg"} alt="icon" width={60} height={60}  className="max-lg:hidden rounded-xl lg:left-10 absolute z-10" />
-            <Image src={"/icons/decorations/icon-2.svg"} alt="icon" width={60} height={60}  className="max-lg:hidden rounded-xl lg:right-10 absolute z-10" />
-            <Image src={"/icons/decorations/icon-3.svg"} alt="icon" width={60} height={60}  className="max-lg:hidden rounded-xl lg:bottom-10 lg:left-40 absolute z-10" />
-            <Image src={"/icons/decorations/icon-4.svg"} alt="icon" width={60} height={60}  className="max-lg:hidden rounded-xl lg:bottom-10 lg:right-40 absolute z-10" />
+      <div className="w-responsive relative space-y-5 rounded-xl bg-[#F7F1FF] px-5 py-12 text-center">
+        {/* ICONS */}
+        <Image
+          src={"/icons/decorations/icon-1.svg"}
+          alt="icon"
+          width={60}
+          height={60}
+          className="absolute z-10 rounded-xl max-lg:hidden lg:left-10"
+        />
+        <Image
+          src={"/icons/decorations/icon-2.svg"}
+          alt="icon"
+          width={60}
+          height={60}
+          className="absolute z-10 rounded-xl max-lg:hidden lg:right-10"
+        />
+        <Image
+          src={"/icons/decorations/icon-3.svg"}
+          alt="icon"
+          width={60}
+          height={60}
+          className="absolute z-10 rounded-xl max-lg:hidden lg:bottom-10 lg:left-40"
+        />
+        <Image
+          src={"/icons/decorations/icon-4.svg"}
+          alt="icon"
+          width={60}
+          height={60}
+          className="absolute z-10 rounded-xl max-lg:hidden lg:bottom-10 lg:right-40"
+        />
 
+        <h3 className="text-2xl font-bold ">
+          {subscribe.title[0]}
+          <br className="max-md:hidden" />
+          {subscribe.title[1]}
+        </h3>
+        <SubTitle subTitleClass="lg:w-1/2">{subscribe.subtitle}</SubTitle>
 
-            <h3 className='text-2xl font-bold '>
-                {subscribe.title[0]}
-                <br className='max-md:hidden'/>
-                {subscribe.title[1]}
-            </h3>
-            <SubTitle subTitleClass='lg:w-1/2'>
-                {subscribe.subtitle}
-            </SubTitle>
-
-            {/* form */}
-            <div className="form-group lg:w-1/2 mx-auto max-lg:space-y-3 lg:flex-center gap-4">
-                <input type="email" placeholder="Enter your email" className="max-lg:w-3/4 max-lg:mx-auto p-3 px-5 rounded-xl lg:w-[285px] border border-[#dcdcdc]" />
-                <button className="max-lg:w-3/4 max-lg:mx-auto  bg-purple text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:scale-105 duration-200">{subscribe.button}</button>
-            </div>
+        {/* form */}
+        <div className="form-group lg:flex-center mx-auto gap-4 max-lg:space-y-3 lg:w-1/2">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+            className="rounded-xl border border-[#dcdcdc] p-3 px-5 max-lg:mx-auto max-lg:w-3/4 lg:w-[285px]"
+          />
+          <button
+            onClick={handleSubmit}
+            className="bg-purple rounded-xl  px-6 py-3 font-semibold text-white shadow-xl duration-200 hover:scale-105 max-lg:mx-auto max-lg:w-3/4"
+          >
+            {subscribe.button}
+          </button>
         </div>
-    )
+      </div>
+    );
 }
 
 export default Subscribe
