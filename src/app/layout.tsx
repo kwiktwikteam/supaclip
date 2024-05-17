@@ -3,8 +3,7 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { Toaster } from "~/components/ui/toaster";
-import { CSPostHogProvider } from "./providers";
-import Script from "next/script";
+
 
 const inter = Inter({
   subsets: ["latin"],
