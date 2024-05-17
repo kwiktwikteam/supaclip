@@ -73,6 +73,14 @@ export const fetchMetaData = async(id: string): Promise<
 
   const res = await data.json();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  if(!res.title || !res.author_name || !res.provider_name || !res.thumbnail_url) {
+    return {
+      title: "", 
+      author_name: "",
+      provider_name: "",
+      thumbnail_url: ""
+    }
+  }
   return res;
 } 
 

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { Share, Share2Icon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +34,8 @@ export default async function Page({
   const allVids = await db
     .select()
     .from(transcriptions)
-    .where(eq(transcriptions.userId, params.creatorId));
+    .where(eq(transcriptions.userId, params.creatorId))
+    .orderBy(desc(transcriptions.createdAt));
   return (
     <main className="min-h-screen bg-black py-5">
       <div className="mx-auto w-[90%] max-w-6xl space-y-4 pt-5">
