@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React, {useState, useEffect } from "react";
 import Button from "~/components/ui/Button";
 // import { getVideoId } from "~/lib/helpers/other";
