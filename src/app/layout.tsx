@@ -3,6 +3,8 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { Toaster } from "~/components/ui/toaster";
+import { CSPostHogProvider } from "./providers";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,10 +24,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {/* <CSPostHogProvider> */}
+      <head>
+        <script
+          defer
+          data-domain="supaclip.pro"
+          src="https://plausible.io/js/script.js"
+        ></script>
+      </head>
       <body className={`font-sans ${inter.variable} h-full w-full`}>
         {children}
         <Toaster />
       </body>
+      {/* </CSPostHogProvider> */}
     </html>
   );
 }
