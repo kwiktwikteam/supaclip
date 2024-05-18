@@ -76,7 +76,7 @@ const Page = () => {
           alt="hero"
           fill
           priority
-          className="absolute z-10 h-full w-full opacity-30"
+          className="absolute z-10 h-full w-full opacity-30 "
         />
         <Image
           src={"/images/hero/bg.png"}
