@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (getTranscripts.length == 0) {
     // fetch transcript
     const res = await fetchTranscript(params.id);
-
+    
     const metaData = await fetchMetaData(params.id);
     console.log(metaData);
 
@@ -43,31 +43,36 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     let para = "";
 
-    res.forEach((item) => {
-      copyRes.push({
-        transcriptText: item.text,
-        duration: item.duration.toString(),
-        offset: item.offset.toString(),
-        videoId: params.id,
+    if (res.length > 0){
+        res.forEach((item) => {
+        copyRes.push({
+          transcriptText: item.text,
+          duration: item.duration.toString(),
+          offset: item.offset.toString(),
+          videoId: params.id,
+        });
+        para += item.text;
       });
-      para += item.text;
-    });
 
-    const summary = await textTotext("Summarize the video", para);
+      let summary = ""
+      if(para) {
+        summary = await textTotext("Summarize the video", para);
+      }
 
-    await db
-      .insert(transcriptions)
-      .values({
-        title: metaData.title,
-        thumbnail: metaData.thumbnail_url,
-        channelTitle: metaData.author_name,
-        userId: session.userId,
-        summary: summary,
-        videoId: params.id,
-      })
-      .onConflictDoNothing();
+      await db
+        .insert(transcriptions)
+        .values({
+          title: metaData.title,
+          thumbnail: metaData.thumbnail_url,
+          channelTitle: metaData.author_name,
+          userId: session.userId,
+          summary: summary,
+          videoId: params.id,
+        })
+        .onConflictDoNothing();
 
-    await db.insert(transcriptRows).values(copyRes);
+      await db.insert(transcriptRows).values(copyRes);
+    }
   }
 
   redirect("/c/" + session.userId + "/vid/" + params.id);

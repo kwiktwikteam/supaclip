@@ -7,15 +7,15 @@ import { BiSolidShareAlt } from "react-icons/bi";
 
 const Transcript = ({ transcripts }: { transcripts: TranscriptProps[] }) => {
 
-  const values = {
-    transcript: {
-      title: "Transcript",
-    }, 
-    summary: {
-      title: "Summary"
-    }
-  }
-  const [value, setValue] = useState("transcript")
+  // const values = {
+  //   transcript: {
+  //     title: "Transcript",
+  //   }, 
+  //   summary: {
+  //     title: "Summary"
+  //   }
+  // }
+  // const [value, setValue] = useState("transcript")
 
 
   return (
@@ -34,8 +34,8 @@ const Transcript = ({ transcripts }: { transcripts: TranscriptProps[] }) => {
       <div className="pb-5 text-xl leading-10">
         {
           transcripts.length === 0 && (
-            <div className='w-[50px] h-[50px] rounded-full bg-black border-t-2 animate-spin'>
-
+            <div className='py-2'>
+              No transcript available for this video
             </div>
           )
         }

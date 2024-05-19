@@ -51,11 +51,13 @@ export const fetchVideoId = async(url: string) => {
   }
 
 export const fetchTranscript = async (id: string) => {
-    const res = await YoutubeTranscript.fetchTranscript(id);
-    // console.log(res[1])
-    // const json = await res.json();
-    // console.log(json)
-    return res
+    try {
+      const res = await YoutubeTranscript.fetchTranscript(id);
+      return res
+    } catch (error: any) {
+      console.log(error.message)
+      return []
+    }
 }
 
 export const fetchMetaData = async(id: string): Promise<
