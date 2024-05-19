@@ -37,14 +37,17 @@ const SearchButton = () => {
       <Search
         className={`${!url && "hidden"} cursor-pointer`}
         onClick={async () => {
-          let id = url;
+          const id = url;
           if (url.length >= 11) {
             const res = await fetchVideoId(url);
             if (res) {
-              id = res;
+              router.push("/generate/" + res);
             }
+          } else if (url.length == 11) {
+            router.push("/generate/" + id);
+          } else {
+            router.push("/generate" + '?' + createQueryString('q', id))
           }
-          router.push("/generate" + '?' + createQueryString('q', id))
         }}
       />
     </div>
