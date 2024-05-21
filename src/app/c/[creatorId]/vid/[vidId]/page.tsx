@@ -75,25 +75,8 @@ const Page = () => {
   useEffect(() => {
     // get the video id from the url
     const fetchAll = async (id: string, creator : string) => {
-      const transcripts = await fetchTranscriptionRows(id, creator); // Await the result of the fetchTranscriptionRows function
-      setres(transcripts);
-    
-      if (transcripts.length == 0) {
-        const path: string = window.location.pathname;
-        const parts: string[] = path.split("/vid");
-
-        router.push(parts[0] ?? "/generate");
-      }
-
-      let text = "";
-      transcripts.forEach((item) => {
-        text += item.transcriptText;
-      });
-
-      setpara(text);
-
       const res = await fetchVideoTranscrptDB(id);
-      if(res) {
+      if (res) {
         settranscript({
           id: res.id,
           title: res.title ?? "Video Sample Title",
@@ -102,7 +85,25 @@ const Page = () => {
         });
       }
 
+      if (!res) {
+        toast({
+          title: "No Video Found",
+          description: "The video you are looking for does not exist.",
+        });
+        return router.push("/generate?q=" + id);
+      }
       
+      const transcripts = await fetchTranscriptionRows(id, creator); // Await the result of the fetchTranscriptionRows function
+      setres(transcripts);
+    
+      
+
+      let text = "";
+      transcripts.forEach((item) => {
+        text += item.transcriptText;
+      });
+
+      setpara(text);      
     };
 
     
@@ -114,7 +115,7 @@ const Page = () => {
     
     setvidId(lastPart ?? "");
     fetchAll(lastPart ?? "", parts[4] ?? "").catch((err) => console.log(err));
-  }, [setvidId, router]);
+  }, [setvidId, router, toast]);
 
   return (
     <div className="flex h-full  bg-black  text-white max-md:h-screen">

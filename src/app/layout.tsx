@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { Toaster } from "~/components/ui/toaster";
+import { SessionProvider } from "next-auth/react";
 
 
 const inter = Inter({
@@ -31,10 +32,12 @@ export default function RootLayout({
           src="https://plausible.io/js/script.js"
         ></script>
       </head>
-      <body className={`font-sans ${inter.variable} h-full w-full`}>
-        {children}
-        <Toaster />
-      </body>
+      <SessionProvider >
+        <body className={`font-sans ${inter.variable} h-full w-full`}>
+          {children}
+          <Toaster />
+        </body>
+      </SessionProvider>
       {/* </CSPostHogProvider> */}
     </html>
   );

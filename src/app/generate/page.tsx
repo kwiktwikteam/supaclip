@@ -72,7 +72,7 @@ const Page = () => {
 
         <SetUrlToSearch seturl={setvideoUrl} />
         <Image
-          src={"/hero_bg.png"}
+          src={"/bg.png"}
           alt="hero"
           fill
           priority

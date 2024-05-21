@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   } = await auth();
 
-  if (!session.userId ?? !session) {
+  if (!session) {
     return redirect("/api/auth/signin?callbackUrl=/generate/" + params.id);
   }
 
@@ -71,7 +71,9 @@ export default async function Page({ params }: { params: { id: string } }) {
         })
         .onConflictDoNothing();
 
-      await db.insert(transcriptRows).values(copyRes);
+      if(para) {
+        await db.insert(transcriptRows).values(copyRes);
+      }
     }
   }
 

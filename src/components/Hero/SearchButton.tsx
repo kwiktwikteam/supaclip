@@ -1,12 +1,18 @@
 "use client"
 import { ArrowRight, Search } from "lucide-react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Button from "../ui/Button";
 import { fetchVideoId } from "~/lib/helpers/transcript";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
- 
+ import { useSession } from "next-auth/react";
+import { useToast } from "../ui/use-toast";
 
 const SearchButton = () => {
+
+  const { data: session, update, status } = useSession();
+
+  const {toast} = useToast();
+
   const [url, seturl] = useState("");
   const router = useRouter();
   const pathname = usePathname();
@@ -14,6 +20,9 @@ const SearchButton = () => {
 
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
+
+
+
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -24,8 +33,10 @@ const SearchButton = () => {
     [searchParams],
   );
 
+  
+
   return (
-    <div className="flex flex-col items-center justify-center duration-300 sm:gap-8 md:flex-row">
+    <div className="flex  items-center justify-center duration-300 sm:gap-8 flex-row">
       <input
         type="text"
         value={url}
@@ -37,6 +48,14 @@ const SearchButton = () => {
       <Search
         className={`${!url && "hidden"} cursor-pointer`}
         onClick={async () => {
+
+          if(session == undefined || session == null) {
+            toast({
+              title: "Please Sign In",
+              description: "You need to sign in to use this feature",
+            })
+            router.push("/api/auth/signin")
+          }
           const id = url;
           if (url.length >= 11) {
             const res = await fetchVideoId(url);
