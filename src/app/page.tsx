@@ -14,7 +14,7 @@ export default function HomePage() {
           <Hero />
           <div className="space-y-44">
             <Steps />
-            <KeyFeatures />
+            {/* <KeyFeatures /> */}
           </div>
           <EarlyAdopters />
           <Subscribe />
