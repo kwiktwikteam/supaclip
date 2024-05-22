@@ -2,13 +2,15 @@
 
 import React, {useState, useEffect } from "react";
 import Button from "~/components/ui/Button";
-// import { getVideoId } from "~/lib/helpers/other";
 import Image from "next/image";
 import { useToast } from "~/components/ui/use-toast";
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { fetchMetaData, fetchVideoId } from "~/lib/helpers/transcript";
+import VidGallery from "~/components/Gallery/VidGallery";
+import { MdPerson } from "react-icons/md";
+import { useSession } from "next-auth/react";
 
 
 
@@ -16,7 +18,9 @@ const Page = () => {
   const [videoUrl, setvideoUrl] = useState("");
   const [vidId, setvidId] = useState("")
   const { toast } = useToast();
-
+  const { data: session } = useSession()
+  const [showModal, setshowModal] = useState(false);
+  // console.log(data)
 
   const [metaData, setmetaData] = useState({
     title: "",
@@ -27,6 +31,7 @@ const Page = () => {
 
 
   const getVideoData = async() => {
+    setshowModal(true)
     try {
       if (!videoUrl) {
         toast({
@@ -39,7 +44,7 @@ const Page = () => {
 
       if (!id && videoUrl.length != 11) {
         toast({
-          title: "Some error occured, please try again.",
+          title: "Please Enter a Valid Video URL or ID.",
         });
         return;
       }
@@ -93,11 +98,19 @@ const Page = () => {
           <Link href="/" className="rounded-full border-2 p-2">
             <HomeIcon />
           </Link>
+          {session?.user && (
+            <Link
+              href={"/c/" + session.userId}
+              className="rounded-full border-2 p-2"
+            >
+              <MdPerson className="h-6 w-6" />
+            </Link>
+          )}
         </div>
         <div className="flex-col-center-center z-10 gap-5 max-md:w-screen">
           <input
             type="text"
-            placeholder="YouTube Video Id"
+            placeholder="YouTube Video Url or ID"
             value={videoUrl}
             className="w-[90%] rounded-full px-4 py-3 md:w-[450px]"
             onChange={async (e) => {
@@ -115,7 +128,8 @@ const Page = () => {
         </div>
       </div>
 
-      {vidId && metaData.thumbnail_url && (
+      {/*  */}
+      {vidId && showModal && metaData.thumbnail_url && (
         <div className="absolute bottom-0 left-0 right-0 top-0 z-50 grid place-content-center backdrop-blur-md">
           <div className="mx-auto w-[90%] max-w-6xl rounded-xl bg-white p-5 sm:w-[60%]">
             <div className="flex flex-col gap-5 md:flex-row">
@@ -131,7 +145,7 @@ const Page = () => {
               <div className="flex flex-col items-stretch md:w-2/3">
                 <div className="flex-1 space-y-4 pb-8">
                   <h1 className="text-xl font-bold md:text-3xl ">
-                    {metaData.title}
+                    {metaData.title.slice(0, 35)}
                   </h1>
                   <p className="text-md font-bold text-gray-500">
                     @{metaData.author_name}
@@ -142,10 +156,34 @@ const Page = () => {
                   </p>
                 </div>
                 {/* <Link href={`/generate/${vidId}`}> */}
-                  <Button onClick={() => {
-                    window.location.pathname = "/generate/" + vidId;  
-                  }} className="bg-black text-white">Generate</Button>
+                {/* <Button
+                  onClick={() => {
+                    window.location.pathname = "/generate/" + vidId;
+                  }}
+                  className="bg-black text-white"
+                >
+                  Generate
+                </Button> */}
                 {/* </Link> */}
+
+                <div className="flex flex-col items-center justify-between md:flex-row">
+                  {/* <Button
+                    onClick={() => {
+                      setshowModal(false);
+                    }}
+                    className="bg-white text-black border border-black"
+                  >
+                    Close
+                  </Button> */}
+                  <Button
+                    onClick={() => {
+                      window.location.pathname = "/generate/" + vidId;
+                    }}
+                    className="bg-black text-white w-full"
+                  >
+                    Generate
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

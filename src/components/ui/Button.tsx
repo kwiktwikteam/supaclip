@@ -18,7 +18,7 @@ const Button = ({ children, variant = "light", onClick, className, disabled }: B
         variant == "dark"
           ? "bg-black text-white"
           : variant == "light"
-            ? "text-purple border-purple"
+            ? "text-purple "
             : "bg-white"
       }  cursor-pointer text-nowrap rounded-full px-6 py-3 duration-200 hover:scale-105 ${className}`}
     >

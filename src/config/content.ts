@@ -1,9 +1,9 @@
 const content = {
-    "title": "React App",
-    "description": "This is a React app",
+    "title": "Supaclip",
+    "description": "Summarize, transcripts, timestamps & AI assistant for your videos are just a click away",
     "home": {
         "header": {
-            "title": "Sunset",
+            "title": "Supaclip",
             "links" : [
                 {
                     "id": 1, 
@@ -23,12 +23,12 @@ const content = {
                     "url": "#pricing",
                     "active": false
                 },
-                {
-                    "id": 4,
-                    "title": "Testimonials",
-                    "url": "#testimonials",
-                    "active": false
-                },
+                // {
+                //     "id": 4,
+                //     "title": "Testimonials",
+                //     "url": "#testimonials",
+                //     "active": false
+                // },
                 // {
                 //     "id": 5,
                 //     "title": "Chrome extension",
@@ -46,10 +46,43 @@ const content = {
             
         },
         "hero": {
-            "title": ["Instantly turn your videos into", "searchable resources."],
+            "title": ["Instantly turn any video into", "knowledge base."],
             "subtitle": "Summarize, transcripts, timestamps & AI assistant for your videos are just a click away",
-            "button": "Get Started ->",
-            "more": "More 200+ users are having more fun"
+            "button": "Get Started",
+            "more": "50+ users are enjoying this for $0"
+        },
+        "usecases": {
+            "title": ["Some", "Awesome", "Usecases"],
+            "usecase": [
+                {
+                    "id": 1, 
+                    "height" : 280,
+                    "title": "Content Creators", 
+                    "icon": "/images/usecases/creator.png",
+                    "desc": "Increase video's organic reach by content distribution"
+                },
+                {
+                    "id": 2, 
+                    "height" : 330,
+                    "title": "Students", 
+                    "icon": "/images/usecases/student.png",
+                    "desc": "Get most out of your long lectures using summary & Ai assistant"
+                },
+                {
+                    "id": 3, 
+                    "height" : 330,
+                    "title": "Podcast Hosts", 
+                    "icon": "/images/usecases/podcast.png",
+                    "desc": "Offer show notes, transcripts, chatbot for episode recaps and engagement."
+                },
+                {
+                    "id": 4, 
+                    "height" : 280,
+                    "title": "Researchers", 
+                    "icon": "/images/usecases/research.png",
+                    "desc": "Extract key insights, quotes, clips from interview videos & documentaries "
+                },
+            ]
         },
         "steps":{
             "title": ["Three", "easy steps"],
@@ -61,7 +94,8 @@ const content = {
                     "button": "Join Free",
                     "type": 1,
                     "boxOut" : "bg-light-blue",
-                    "boxIn" : "bg-lighter-blue"
+                    "boxIn" : "bg-lighter-blue",
+                    "image": "/images/steps/step.svg"
                 },
                 {
                     "id": 2, 
@@ -70,16 +104,18 @@ const content = {
                     "button": "Join Free",
                     "type": 2,
                     "boxOut" : "bg-light-pink",
-                    "boxIn" : "bg-lighter-pink"
+                    "boxIn" : "bg-lighter-pink",
+                    "image": "/images/steps/step-2.svg"
                 },
                 {
                     "id": 3, 
                     "title": "Transcript & Timestamp",
                     "desc": "Get complete transcript with timestamps to easily navigate the video.", 
                     "button": "Join Free",
-                    "type": 2,
+                    "type": 1,
                     "boxOut" : "bg-light-darkBlue",
-                    "boxIn" : "bg-lighter-darkBlue"
+                    "boxIn" : "bg-lighter-darkBlue",
+                    "image": "/images/steps/step.svg"
                 }
             ]
         },

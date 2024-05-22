@@ -9,7 +9,8 @@ import {
   text,
   timestamp,
   varchar,
-  pgTable
+  pgTable,
+  uniqueIndex
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 // import type { AdapterAccountType } from '@auth/core/adapters'
@@ -29,6 +30,8 @@ export const users = pgTable("user", {
  email: text("email").notNull(),
  emailVerified: timestamp("emailVerified", { mode: "date" }),
  image: text("image"),
+  // createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`).notNull(),
+  // updatedAt: timestamp("updatedAt"),
 })
  
 export const accounts = pgTable(
@@ -82,7 +85,7 @@ export const transcriptions = createTable(
   {
     id: serial("id").primaryKey(),
     userId: varchar("userId", { length: 255 }).notNull().references(() => users.id),
-    videoId: varchar("videoId", { length: 255 }).notNull().unique(), // same as yt video id
+    videoId: varchar("videoId", { length: 255 }).notNull(), // same as yt video id
     title: varchar("title", { length: 550 }).notNull(),
     channelTitle: varchar("channelTitle", { length: 550 }).notNull(),
     thumbnail: text("thumbnail").notNull(),
@@ -91,11 +94,13 @@ export const transcriptions = createTable(
     // jobId: varchar("jobId", { length: 255 }),
     createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`).notNull(),
     updatedAt: timestamp("updatedAt"),
-  }
+  }, (t) => ({
+    vidCreatorUnique: uniqueIndex().on(t.userId, t.videoId),
+  }) 
 )
 
 export const transcriptionsRelations = relations(transcriptions, ({ many }) => ({
-  transcriptRows: many(transcriptRows),
+  transcriptRows: many(transcriptRows)
 }));
 
 export const transcriptRows= createTable(

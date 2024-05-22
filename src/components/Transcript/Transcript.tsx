@@ -1,21 +1,12 @@
-import React, { useState } from 'react'
-import { type TranscriptProps } from '~/app/(template)/video/[id]/page';
-import { BiSolidShareAlt } from "react-icons/bi";
+import React from 'react'
+import { type TranscriptProps } from '~/app/c/[creatorId]/vid/[vidId]/page';
 
 
 
 
 const Transcript = ({ transcripts, loading }: { transcripts: TranscriptProps[], loading: boolean }) => {
 
-  // const values = {
-  //   transcript: {
-  //     title: "Transcript",
-  //   }, 
-  //   summary: {
-  //     title: "Summary"
-  //   }
-  // }
-  // const [value, setValue] = useState("transcript")
+  // console.log(loading, transcripts);
 
 
   return (
@@ -32,7 +23,7 @@ const Transcript = ({ transcripts, loading }: { transcripts: TranscriptProps[], 
         </div>
       </div> */}
       <div className="pb-5 text-xl leading-10">
-        {loading && (
+        {loading && transcripts.length === 0  && (
           <div className="z-50 grid h-full w-full place-content-center bg-black">
             <div
               className={`h-[50px] w-[50px] animate-spin rounded-full border-t-4 border-gray-200 `}

@@ -1,44 +1,47 @@
-import React from 'react'
+import React, { use } from 'react'
 import Title, { SubTitle } from '../ui/Title'
 import content from '~/config/content';
 import Image from 'next/image';
 import EarlyAdopterCard from './EarlyAdopterCard';
 
 const EarlyAdopters = () => {
-    const { testimonials } = content.home;
+    const { usecases } = content.home;
+    // const { testimonials } = content.home;
     
     
     return (
-        <div className='space-y-24'>
-            <div className='space-y-8'>
-                <Title>
-                    {testimonials.title[0]}{" "}
-                    <span className='text-purple'>
-                        {testimonials.title[1]}
-                    </span>
-                    <br/>
-                    <span className='flex-center gap-2'>
-                        {testimonials.title[2]}
-                        <Image
-                        src={"/images/hero/users.png"}
-                        alt="users"
-                        width={190}
-                        height={20}
-                        className=''
-                    />
-                    </span>
-                </Title>
-                <SubTitle subTitleClass='lg:w-1/2'>
-                    {testimonials.subtitle}
-                </SubTitle>
-            </div>
-            <div className='xl:w-[60%] rounded-xl mx-auto bg-[#e6bf9f12] p-3 grid lg:grid-cols-2 gap-4'>
-                {testimonials.testimonials.map((testimonial, index) => (
-                    <EarlyAdopterCard key={testimonial.id} testimonial={testimonial} />
-                ))}
-            </div>
+      <div id="features" className="space-y-24">
+        <div className="space-y-8">
+          <Title className="">
+            <span>{usecases.title[0]} </span>
+            <div className="text-purple relative inline">
+              <span>
+                {usecases.title[1]}
+                <Image
+                  src="/icons/hero/wigly.svg"
+                  alt="wigly"
+                  width={118}
+                  height={5}
+                  className="absolute -bottom-2 left-0 right-0 w-full"
+                />
+              </span>
+            </div>{" "}
+            {usecases.title[2]}
+          </Title>
+          {/* <SubTitle subTitleClass="lg:w-1/2">{testimonials.subtitle}</SubTitle> */}
         </div>
-    )
+        <div className="mx-auto grid gap-4 rounded-xl bg-[#e6bf9f12] p-3 lg:grid-cols-2 xl:w-[60%]">
+          {usecases.usecase.map((usecase, index) => (
+            <EarlyAdopterCard key={usecase.id} usecase={usecase} />
+          ))}
+        </div>
+        {/* <div className="mx-auto grid gap-4 rounded-xl bg-[#e6bf9f12] p-3 lg:grid-cols-2 xl:w-[60%]">
+          {testimonials.testimonials.map((testimonial, index) => (
+            <EarlyAdopterCard key={testimonial.id} testimonial={testimonial} />
+          ))}
+        </div> */}
+      </div>
+    );
 }
 
 

@@ -24,18 +24,19 @@ const VidGallery = ({
 
   return (
     <div
-      className={`grid overflow-x-hidden  w-full grid-cols-1 gap-8 overflow-scroll sm:grid-cols-2 md:grid-cols-3 lg:max-h-[80vh] lg:grid-cols-3 ${className}`}
+      className={`grid w-full  grid-cols-1 gap-8 overflow-scroll overflow-x-hidden sm:grid-cols-2 md:grid-cols-3 lg:max-h-[80vh] lg:grid-cols-3 ${className}`}
     >
-      {videos.map(
-        (video, index) => (
-          <VideoCard
-            key={index}
-            video={video}
-            hideDetails={hideDetails}
-            creator={creator}
-          />
-        ),
-      )}
+      {
+        videos.length == 0 && <h2 className='text-xl font-semibold opacity-70 font-mono text-white text-nowrap'>No supaclips generated yet!</h2>
+      }
+      { videos.length > 0 && videos.map((video, index) => (
+        <VideoCard
+          key={index}
+          video={video}
+          hideDetails={hideDetails}
+          creator={creator}
+        />
+      ))}
     </div>
   );
 };

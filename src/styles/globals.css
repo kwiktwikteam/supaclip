@@ -70,6 +70,11 @@
     * {
       @apply border-border;
     }
+    html{ 
+        scroll-behavior: smooth;
+        scroll-padding: 1.5rem;
+    }
+
     body {
       @apply bg-background text-foreground;
     }
@@ -109,7 +114,7 @@
 }
 
 .bg-pink{
-    @apply bg-[#F7A8D0];
+    @apply bg-[#F73090];
 }
 
 .bg-light-pink{

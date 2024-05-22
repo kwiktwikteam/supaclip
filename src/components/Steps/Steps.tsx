@@ -6,9 +6,10 @@ import StepCard from './StepCard';
 
 const Steps = () => {
     const { steps } = content.home;
-  
     return (
-        <div className='w-responsive space-y-12'>
+        <div id='keysteps' className='w-responsive space-y-12' style={{
+          background: `radial-gradient()`,
+        }}>
             <Title className=''>
                 <div className='relative text-purple inline'>
                   {steps.title[0]}

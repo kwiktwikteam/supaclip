@@ -34,13 +34,11 @@ const Header = async () => {
           </Link>
         ))}
       </ul>
-      <Button className="flex-center gap-5">
-        {session?.userId ? (
-          <Link href={`/c/${session.userId}`}>{header.button.title}</Link>
-        ) : (
-          <Link href="/api/auth/signin">Sign in</Link>
-        )}
-      </Button>
+      <Link href={session?.userId ? `/c/${session.userId}` : "/api/auth/signin"}>
+        <Button className="flex-center gap-5">
+          {session?.userId ? header.button.title : "Sign in"}
+        </Button>
+      </Link>
     </nav>
   );
 };

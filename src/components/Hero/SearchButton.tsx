@@ -46,7 +46,7 @@ const SearchButton = () => {
       ></input>
 
       <Search
-        className={`${!url && "hidden"} cursor-pointer`}
+        className={`${!url && "hidden"} z-50 cursor-pointer`}
         onClick={async () => {
 
           if(session == undefined || session == null) {

@@ -7,6 +7,7 @@ import Chat from "~/components/Chat/Chat";
 import Transcript from "~/components/Transcript/Transcript";
 // import { YoutubeTranscript } from "youtube-transcript";
 import {
+  fetchTranscriptDBCreator,
   fetchTranscriptionRows,
   fetchVideoTranscrptDB,
 } from "~/lib/helpers/transcript";
@@ -15,6 +16,8 @@ import Link from "next/link";
 
 import { TiArrowBack } from "react-icons/ti";
 import { useToast } from "~/components/ui/use-toast";
+import { useSession } from "next-auth/react";
+import { set } from "zod";
 
 export interface TranscriptProps {
   videoId: string;
@@ -36,7 +39,7 @@ interface Transcription {
 const Page = () => {
   // const location
   const router = useRouter();
-  
+  const { data: session } = useSession(); 
   
   const { toast } = useToast();
   const showToast = () => {
@@ -70,60 +73,55 @@ const Page = () => {
     summary: "" 
   })
 
-   const fetchAll = useCallback(async (id: string, creator: string) => {
-     
-     const res = await fetchVideoTranscrptDB(id);
-     if (res) {
-       settranscript({
-         id: res.id,
-         title: res.title ?? "Video Sample Title",
-         videoId: res.videoId,
-         summary: res.summary,
-       });
-     } else {
-       toast({
-         title: "No Video Found",
-         description: "The video you are looking for does not exist.",
-       });
-       return router.push("/generate?q=" + id);
-     }
-
-     setisLoading(true);
-     const transcripts = await fetchTranscriptionRows(id, creator); // Await the result of the fetchTranscriptionRows function
-     setres(transcripts);
-     setisLoading(false);
-     let text = "";
-     transcripts.forEach((item) => {
-       text += item.transcriptText;
-     });
-
-     setpara(text);
-   }, [router, toast])
+   
 
   useEffect(() => {
       const path: string = window.location.pathname;
       const parts: string[] = path.split("/");
       const lastPart = parts[parts.length - 1];
+      // console.log(parts[4])
+      const fetchAll = async (id: string, creator: string) => {
+        setisLoading(true);
+        const response = await fetchTranscriptDBCreator(id, creator);
 
+        //  console.log(response);
+        if (!response[0]) {
+          toast({
+            title: "No Video Found ❌",
+            description: "You haven't created a supaclip for this video yet.",
+          });
+          return router.push("/generate?q=" + id);
+        } else {
+          settranscript({
+            id: response[0].id,
+            title: response[0].title ?? "Video Sample Title",
+            videoId: response[0].videoId,
+            summary: response[0].summary,
+          });
+
+          setvidId(response[0].videoId);
+        }
+
+        const transcripts = await fetchTranscriptionRows(id, creator); // Await the result of the fetchTranscriptionRows function
+        setres(transcripts);
+        setisLoading(false);
+        let text = "";
+        transcripts.forEach((item) => {
+          text += item.transcriptText;
+        });
+
+        setpara(text);
+      };
+      
+      
       setvidId(lastPart ?? "");
-    
+      fetchAll(lastPart ?? "", parts[2] ?? "").catch((err) => console.log(err));    
   }, [])
 
 
-  useEffect(() => {
-    const path: string = window.location.pathname;
-    const parts: string[] = path.split("/");
-    const lastPart = parts[parts.length - 1];
-
-    setvidId(lastPart ?? "");
-
-    // get the video id from the url
-
-    fetchAll(lastPart ?? "", parts[4] ?? "").catch((err) => console.log(err));
-  }, [fetchAll]);
 
   return (
-    <div className="flex min-h-screen bg-black  text-white md:h-screen">
+    <div className="flex min-h-screen bg-black  text-white md:h-screen md:max-h-screen">
       <div className="video flex h-full w-full flex-col space-y-4  p-8 md:w-3/4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">{transcript.title}</h2>
@@ -144,16 +142,19 @@ const Page = () => {
             </Link>
           </div>
         </div>
-        
-          <div className={`h-1/2 min-h-[50vh] w-full bg-white/20 ${!vidId && "animate-pulse"}`}>
-            {vidId && (<iframe
+
+        <div
+          className={`h-1/2 min-h-[50vh] w-full bg-white/20 ${!vidId && "animate-pulse"}`}
+        >
+          {vidId && (
+            <iframe
               width="420"
               height="315"
               className="h-1/2 min-h-[50vh] w-full"
               src={`https://www.youtube.com/embed/${vidId}`}
             ></iframe>
           )}
-          </div>
+        </div>
         {/* {vidId.length == 11 && <Transcript transcripts={res} />} */}
 
         <Tabs defaultValue="transcript" className="w-full overflow-x-clip">
@@ -179,7 +180,13 @@ const Page = () => {
             <Transcript transcripts={res} loading={isLoading} />
           </TabsContent>
           <TabsContent value="summary">
-            {transcript.summary ?? "No summary available for this video."}
+            <div className="py-5">
+              <span className=" text-xl ">
+                {transcript.summary == ""
+                  ? "No summary available for this video."
+                  : transcript.summary}
+              </span>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
@@ -195,7 +202,7 @@ const Page = () => {
           onClick={() => setshowMobileChat(!showMobileChat)}
           className="flex-center fixed bottom-5 right-5 h-[67px] w-[67px] cursor-pointer rounded-full bg-white/90 md:hidden"
         >
-          <BiQuestionMark className="animate-bounce text-4xl text-black" />
+          <BiQuestionMark className=" text-4xl text-black" />
         </div>
       )}
 

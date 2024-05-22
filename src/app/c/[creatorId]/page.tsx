@@ -1,5 +1,5 @@
 import { desc, eq } from "drizzle-orm";
-import { Share, Share2Icon } from "lucide-react";
+import { HomeIcon, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -49,7 +49,7 @@ export default async function Page({
                   alt="Creator Image"
                   width={75}
                   height={75}
-                  className="rounded-full"
+                  className="h-14 w-14 rounded-full"
                 />
               ) : (
                 <MdAccountCircle className="text-6xl text-white" />
@@ -62,16 +62,42 @@ export default async function Page({
           </div>
 
           {/* button */}
-          <div className="flex items-center gap-4 ">
-            {session?.userId == params.creatorId ? (
+          <div className="flex items-center gap-4 max-md:hidden ">
+            {session?.userId  ? (
               <Link href="/generate">
                 <Button className="space-x-2 bg-white text-black">
                   <CgAdd className="text-xl" />
-                  <span>Add Video</span>
+                  <span>Add video</span>
                 </Button>
               </Link>
             ) : null}
+            <Link href="/">
+              <div className="10 rounded-full bg-white p-2 text-black">
+                <HomeIcon className="text-xl" />
+              </div>
+            </Link>
             {/* <Share2Icon className="text-white"  /> */}
+          </div>
+        </div>
+
+        <div className="fixed md:hidden bottom-0 left-0 right-0 z-20  py-4">
+          <div className="mx-auto flex w-[90%] border rounded-full items-center justify-between bg-black py-1 px-3">
+            <Link href="/">
+              <HomeIcon className="h-8 w-8 text-white" />
+            </Link>
+            {/* {session?.userId != params.creatorId ? (
+              <Link href="/generate" className="h-full self-stretch bg-white text-black rounded-full p-2">
+                <Video className="h-10 w-10  rounded-full " />
+              </Link>
+            ) : null} */}
+            {session?.userId? (
+              <Link href="/generate" className="h-full self-stretch bg-white text-black rounded-full p-2">
+                <Video className="h-10 w-10  rounded-full " />
+              </Link>
+            ) : null}
+            <Link href={`/c/${session.userId}/profile`}>
+              <MdAccountCircle className="h-10 w-10 text-white" />
+            </Link>
           </div>
         </div>
         <VidGallery
