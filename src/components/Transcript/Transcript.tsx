@@ -5,7 +5,7 @@ import { BiSolidShareAlt } from "react-icons/bi";
 
 
 
-const Transcript = ({ transcripts }: { transcripts: TranscriptProps[] }) => {
+const Transcript = ({ transcripts, loading }: { transcripts: TranscriptProps[], loading: boolean }) => {
 
   // const values = {
   //   transcript: {
@@ -19,7 +19,7 @@ const Transcript = ({ transcripts }: { transcripts: TranscriptProps[] }) => {
 
 
   return (
-    <div className="transcript overflow-y-scroll max-h-[400px] space-y-5">
+    <div className="transcript relative max-h-[400px] overflow-y-scroll md:space-y-5">
       {/* <div className="flex-center-between">
         <h2 className="cursor-pointer text-xl font-semibold lg:text-2xl">
           Transcript
@@ -32,18 +32,24 @@ const Transcript = ({ transcripts }: { transcripts: TranscriptProps[] }) => {
         </div>
       </div> */}
       <div className="pb-5 text-xl leading-10">
-        {
-          transcripts.length === 0 && (
-            <div className='py-2'>
-              No transcript available for this video
-            </div>
-          )
-        }
+        {loading && (
+          <div className="z-50 grid h-full w-full place-content-center bg-black">
+            <div
+              className={`h-[50px] w-[50px] animate-spin rounded-full border-t-4 border-gray-200 `}
+            ></div>
+          </div>
+        )}
+        {transcripts.length === 0 && !loading && (
+          <div className="py-2">No transcript available for this video</div>
+        )}
         {transcripts.map((item: TranscriptProps, index: number) => {
           return (
-            <div key={index} className="flex items-center flex-wrap gap-4 md:gap-8">
+            <div
+              key={index}
+              className="flex flex-wrap items-center gap-4 md:gap-8"
+            >
               {/* 00:00 - - alksdjflask;jdf */}
-              <div className="text-sm md:text-md font-mono font-bold">
+              <div className="md:text-md font-mono text-sm font-bold">
                 {formatTime(parseFloat(item.offset))} -{" "}
                 {formatTime(
                   parseFloat(item.offset.toString()) +

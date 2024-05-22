@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BiHome, BiQuestionMark, BiSolidShareAlt } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import Chat from "~/components/Chat/Chat";
@@ -62,7 +62,7 @@ const Page = () => {
   const [res, setres] = useState<TranscriptProps[] | []>([]);
   const [vidId, setvidId] = useState("");
   const [para, setpara] = useState("")
-  
+  const [isLoading, setisLoading] = useState(false)
   const [transcript, settranscript] = useState<Transcription>({
     id: 0,
     title: "",
@@ -70,60 +70,63 @@ const Page = () => {
     summary: "" 
   })
 
+   const fetchAll = useCallback(async (id: string, creator: string) => {
+     
+     const res = await fetchVideoTranscrptDB(id);
+     if (res) {
+       settranscript({
+         id: res.id,
+         title: res.title ?? "Video Sample Title",
+         videoId: res.videoId,
+         summary: res.summary,
+       });
+     } else {
+       toast({
+         title: "No Video Found",
+         description: "The video you are looking for does not exist.",
+       });
+       return router.push("/generate?q=" + id);
+     }
+
+     setisLoading(true);
+     const transcripts = await fetchTranscriptionRows(id, creator); // Await the result of the fetchTranscriptionRows function
+     setres(transcripts);
+     setisLoading(false);
+     let text = "";
+     transcripts.forEach((item) => {
+       text += item.transcriptText;
+     });
+
+     setpara(text);
+   }, [router, toast])
+
+  useEffect(() => {
+      const path: string = window.location.pathname;
+      const parts: string[] = path.split("/");
+      const lastPart = parts[parts.length - 1];
+
+      setvidId(lastPart ?? "");
+    
+  }, [])
 
 
   useEffect(() => {
-    // get the video id from the url
-    const fetchAll = async (id: string, creator : string) => {
-      const res = await fetchVideoTranscrptDB(id);
-      if (res) {
-        settranscript({
-          id: res.id,
-          title: res.title ?? "Video Sample Title",
-          videoId: res.videoId,
-          summary: res.summary,
-        });
-      }
-
-      if (!res) {
-        toast({
-          title: "No Video Found",
-          description: "The video you are looking for does not exist.",
-        });
-        return router.push("/generate?q=" + id);
-      }
-      
-      const transcripts = await fetchTranscriptionRows(id, creator); // Await the result of the fetchTranscriptionRows function
-      setres(transcripts);
-    
-      
-
-      let text = "";
-      transcripts.forEach((item) => {
-        text += item.transcriptText;
-      });
-
-      setpara(text);      
-    };
-
-    
-
     const path: string = window.location.pathname;
     const parts: string[] = path.split("/");
     const lastPart = parts[parts.length - 1];
 
-    
     setvidId(lastPart ?? "");
+
+    // get the video id from the url
+
     fetchAll(lastPart ?? "", parts[4] ?? "").catch((err) => console.log(err));
-  }, [setvidId, router, toast]);
+  }, [fetchAll]);
 
   return (
-    <div className="flex h-full  bg-black  text-white max-md:h-screen">
+    <div className="flex min-h-screen bg-black  text-white md:h-screen">
       <div className="video flex h-full w-full flex-col space-y-4  p-8 md:w-3/4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">
-            {transcript.title}
-          </h2>
+          <h2 className="text-xl font-semibold">{transcript.title}</h2>
           <div className="flex gap-8">
             <div
               onClick={() => {
@@ -141,14 +144,16 @@ const Page = () => {
             </Link>
           </div>
         </div>
-        {vidId && (
-          <iframe
-            width="420"
-            height="315"
-            className="h-1/2 min-h-[50vh] w-full"
-            src={`https://www.youtube.com/embed/${vidId}`}
-          ></iframe>
-        )}
+        
+          <div className={`h-1/2 min-h-[50vh] w-full bg-white/20 ${!vidId && "animate-pulse"}`}>
+            {vidId && (<iframe
+              width="420"
+              height="315"
+              className="h-1/2 min-h-[50vh] w-full"
+              src={`https://www.youtube.com/embed/${vidId}`}
+            ></iframe>
+          )}
+          </div>
         {/* {vidId.length == 11 && <Transcript transcripts={res} />} */}
 
         <Tabs defaultValue="transcript" className="w-full overflow-x-clip">
@@ -158,7 +163,10 @@ const Page = () => {
               <TabsTrigger value="summary">Summary</TabsTrigger>
             </TabsList>
             <div className="flex items-center gap-5">
-              <BiSolidShareAlt className="cursor-pointer text-xl" onClick={copyToClipboard} />
+              <BiSolidShareAlt
+                className="cursor-pointer text-xl"
+                onClick={copyToClipboard}
+              />
               <h2
                 onClick={showToast}
                 className="text-md cursor-pointer font-semibold opacity-50 lg:text-lg"
@@ -168,7 +176,7 @@ const Page = () => {
             </div>
           </div>
           <TabsContent value="transcript">
-            <Transcript transcripts={res} />
+            <Transcript transcripts={res} loading={isLoading} />
           </TabsContent>
           <TabsContent value="summary">
             {transcript.summary ?? "No summary available for this video."}
