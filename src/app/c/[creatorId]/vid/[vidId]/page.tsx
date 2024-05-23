@@ -121,7 +121,7 @@ const Page = () => {
 
 
   return (
-    <div className="flex min-h-screen bg-black  text-white md:h-screen md:max-h-screen">
+    <div className="flex min-h-screen bg-black  text-white md:h-screen md:max-h-screen md:overflow-y-hidden">
       <div className="video flex h-full w-full flex-col space-y-4  p-8 md:w-3/4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">{transcript.title}</h2>
