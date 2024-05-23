@@ -32,6 +32,7 @@ export const env = createEnv({
     ),
     LOOPS_EMAIL_KEY: z.string(),
     GEMINI_API_KEY: z.string(),
+    STRIPE_SECRET_KEY: z.string(),
   },
 
   /**
@@ -60,6 +61,7 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     GEMINI_API_KEY: process.env.GEMINI_API_KEY,
     LOOPS_EMAIL_KEY: process.env.LOOPS_EMAIL_KEY,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

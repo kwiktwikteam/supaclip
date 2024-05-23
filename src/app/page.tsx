@@ -7,7 +7,18 @@ import Pricing from "~/components/Pricing/Pricing";
 import Steps from "~/components/Steps/Steps";
 import Subscribe from "~/components/Subscribe/Subscribe";
 
-export default function HomePage() {
+export default function HomePage({
+  searchParams
+}: {
+  searchParams: Record<string, string | undefined>;
+}) {
+  const { session_id } = searchParams;
+
+  if(session_id) {
+    // continue;
+  }
+
+  console.log(searchParams)
   return (
       <main className="space-y-18 relative min-h-screen">
         <Header />

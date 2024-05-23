@@ -66,6 +66,8 @@ const Page = () => {
   const [vidId, setvidId] = useState("");
   const [para, setpara] = useState("")
   const [isLoading, setisLoading] = useState(false)
+
+  
   const [transcript, settranscript] = useState<Transcription>({
     id: 0,
     title: "",
@@ -144,13 +146,13 @@ const Page = () => {
         </div>
 
         <div
-          className={`h-1/2 min-h-[50vh] w-full bg-white/20 ${!vidId && "animate-pulse"}`}
+          className={`h-1/2 min-h-[50vh] rounded-lg w-full bg-white/20 ${!vidId && "animate-pulse"}`}
         >
           {vidId && (
             <iframe
               width="420"
               height="315"
-              className="h-1/2 min-h-[50vh] w-full"
+              className="h-1/2 min-h-[50vh] w-full rounded-lg"
               src={`https://www.youtube.com/embed/${vidId}`}
             ></iframe>
           )}

@@ -33,43 +33,49 @@ const SearchButton = () => {
     [searchParams],
   );
 
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    if (session == undefined || session == null) {
+      toast({
+        title: "Please Sign In",
+        description: "You need to sign in to use this feature",
+      });
+      router.push("/api/auth/signin");
+    }
+    const id = url;
+    if (url.length >= 11) {
+      const res = await fetchVideoId(url);
+      if (res) {
+        router.push("/generate/" + res);
+      }
+    } else if (url.length == 11) {
+      router.push("/generate/" + id);
+    } else {
+      router.push("/generate" + "?" + createQueryString("q", id));
+    }
+  };
+
   
 
   return (
-    <div className="flex  items-center justify-center duration-300 sm:gap-8 flex-row">
+    <form
+      action={handleSubmit}
+      className="flex  flex-row items-center justify-center duration-300 sm:gap-8"
+    >
       <input
         type="text"
         value={url}
         onChange={(e) => seturl(e.target.value)}
-        placeholder="Enter Video URL or ID "
+        placeholder="Enter a youtube video url "
         className="rounded-full bg-white/50 px-4 py-2 text-center text-white shadow-md placeholder:text-white/70  focus:outline-none active:outline-none md:w-[425px]"
       ></input>
 
       <Search
         className={`${!url && "hidden"} z-50 cursor-pointer`}
-        onClick={async () => {
-
-          if(session == undefined || session == null) {
-            toast({
-              title: "Please Sign In",
-              description: "You need to sign in to use this feature",
-            })
-            router.push("/api/auth/signin")
-          }
-          const id = url;
-          if (url.length >= 11) {
-            const res = await fetchVideoId(url);
-            if (res) {
-              router.push("/generate/" + res);
-            }
-          } else if (url.length == 11) {
-            router.push("/generate/" + id);
-          } else {
-            router.push("/generate" + '?' + createQueryString('q', id))
-          }
-        }}
+        type="submit"
       />
-    </div>
+    </form>
   );
 }
 

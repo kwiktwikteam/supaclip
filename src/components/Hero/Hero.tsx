@@ -14,7 +14,7 @@ const Hero = async () => {
   const userImages = await db.select({
     image: users.image,
     name: users.name
-  }).from(users).limit(8).orderBy(desc(users.id));
+  }).from(users).limit(6).orderBy(desc(users.id));
 
 
   return (
@@ -93,8 +93,13 @@ const Hero = async () => {
               <p>{hero.more}</p>
             </div>
           </div>
-          <div className="w-responsive shadow-gray shadow-t-xl min-h-[50vh] rounded-xl bg-white">
-            {" "}
+          <div className="w-responsive shadow-gray shadow-t-xl min-h-[70vh] rounded-xl bg-white">
+            <iframe
+              width="420"
+              height="515"
+              className="h-full min-h-[70vh] w-full rounded-lg"
+              src={`https://www.youtube.com/embed/fBqrn4nXFlc`}
+            />
           </div>
         </div>
       </div>

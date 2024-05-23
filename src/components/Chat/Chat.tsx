@@ -18,6 +18,7 @@ const Chat = ({
   setshowMobileChat: (showMobileChat: boolean) => void;
   transcripts: TranscriptProps[];
 }) => {
+  const [chatTraining, setchatTraining] = useState(true);
   const response = [
     "Have a doubt in this video?",
     "What does this word mean?",

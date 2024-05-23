@@ -107,7 +107,7 @@ const Page = () => {
             </Link>
           )}
         </div>
-        <div className="flex-col-center-center z-10 gap-5 max-md:w-screen">
+        <form action={getVideoData} className="flex-col-center-center z-10 gap-5 max-md:w-screen">
           <input
             type="text"
             placeholder="YouTube Video Url or ID"
@@ -120,12 +120,12 @@ const Page = () => {
 
           <Button
             disabled={vidId ? true : false}
-            onClick={getVideoData}
+            type="submit" 
             className="bg-white"
           >
             Get Video
           </Button>
-        </div>
+        </form>
       </div>
 
       {/*  */}
