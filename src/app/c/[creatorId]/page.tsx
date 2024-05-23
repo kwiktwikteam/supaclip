@@ -95,7 +95,7 @@ export default async function Page({
                 <Video className="h-10 w-10  rounded-full " />
               </Link>
             ) : null}
-            <Link href={`/c/${session.userId}/profile`}>
+            <Link href={`/c/${session?.userId}/profile`}>
               <MdAccountCircle className="h-10 w-10 text-white" />
             </Link>
           </div>
