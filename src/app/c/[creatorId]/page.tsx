@@ -90,7 +90,7 @@ export default async function Page({
                 <Video className="h-10 w-10  rounded-full " />
               </Link>
             ) : null} */}
-            {session?.userId? (
+            {session?.userId ? (
               <Link href="/generate" className="h-full self-stretch bg-white text-black rounded-full p-2">
                 <Video className="h-10 w-10  rounded-full " />
               </Link>
@@ -103,7 +103,7 @@ export default async function Page({
         <VidGallery
           videos={allVids}
           creator={params.creatorId}
-          className="xl:grid-cols-4"
+          className="xl:grid-cols-4 pb-24"
         />
       </div>
     </main>
