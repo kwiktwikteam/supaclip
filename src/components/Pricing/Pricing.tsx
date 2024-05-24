@@ -58,7 +58,7 @@ const Pricing = () => {
           <div className="space-y-2">
             <h2 className="text-3xl font-semibold md:text-5xl">
               <CoffeeIcon className="h-14 w-14" />
-              <span>Buy me coffe</span>
+              <span>Buy me coffee</span>
             </h2>
             {/* <p className="text-[#536174]">For Individuals and Small Teams</p> */}
           </div>
