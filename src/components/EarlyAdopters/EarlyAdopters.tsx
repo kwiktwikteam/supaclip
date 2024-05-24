@@ -30,7 +30,7 @@ const EarlyAdopters = () => {
           </Title>
           {/* <SubTitle subTitleClass="lg:w-1/2">{testimonials.subtitle}</SubTitle> */}
         </div>
-        <div className="mx-auto grid gap-4 rounded-xl bg-[#e6bf9f12] p-3 lg:grid-cols-2 xl:w-[60%]">
+        <div className="mx-auto grid gap-4 rounded-xl bg-[#e6bf9f12] p-3 lg:grid-cols-2 lg:items-center xl:w-[60%]">
           {usecases.usecase.map((usecase, index) => (
             <EarlyAdopterCard key={usecase.id} usecase={usecase} />
           ))}
