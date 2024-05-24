@@ -28,8 +28,10 @@ export async function createCheckoutSession(
 
   const checkoutSession: Stripe.Checkout.Session =
     await stripe.checkout.sessions.create({
+      // metadata: 
+      payment_method_types: ["card"],
       mode: "payment",
-      submit_type: "pay",
+      // submit_type: "pay",
       line_items: [
         {
           quantity: 1,
@@ -38,23 +40,29 @@ export async function createCheckoutSession(
             product_data: {
               name: "Buy me coffee",
             },
-            unit_amount: formatAmountForStripe(
-              Number(data.get("template_price") as string),
-              CURRENCY
-            ),
+            unit_amount: Number(data.get("template_price") as string)* 100,
+            // unit_amount: formatAmountForStripe(
+            //   Number(data.get("template_price") as string),
+            //   CURRENCY
+            // ),
           },
         },
       ],
-      ...(ui_mode === "hosted" && {
-        success_url: `${origin}`,
-        // success_url: `${origin}/stripe-with-checkout?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${origin}`,
-      }),
-      ...(ui_mode === "embedded" && {
-        return_url: `${origin}?session_id={CHECKOUT_SESSION_ID}`,
-      }),
+      // ...(ui_mode === "hosted" && {
+      //   success_url: `${origin}`,
+      //   // success_url: `${origin}/stripe-with-checkout?session_id={CHECKOUT_SESSION_ID}`,
+      //   cancel_url: `${origin}`,
+      // }),
+      // ...(ui_mode === "embedded" && {
+      //   return_url: `${origin}?session_id={CHECKOUT_SESSION_ID}`,
+      // }),
       ui_mode,
+      success_url: `${origin}`,
+      cancel_url: `${origin}`,
     });
+
+
+  console.log("Debugging", checkoutSession)
 
   return {
     client_secret: checkoutSession.client_secret,
