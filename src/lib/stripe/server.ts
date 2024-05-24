@@ -7,7 +7,7 @@ export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
   // https://github.com/stripe/stripe-node#configuration
   apiVersion: "2024-04-10",
   appInfo: {
-    name: "supaclip.pro",
-    url: "https://www.supaclip.pro",
+    name: "launchify.club",
+    url: "https://www.launchify.club",
   },
 });
