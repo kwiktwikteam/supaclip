@@ -12,11 +12,11 @@ export default function HomePage({
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
-  const { session_id } = searchParams;
+  // const { session_id } = searchParams;
 
-  if(session_id) {
-    // continue;
-  }
+  // if(session_id) {
+  //   // continue;
+  // }
 
   console.log(searchParams)
   return (

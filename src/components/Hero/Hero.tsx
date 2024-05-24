@@ -126,16 +126,17 @@ const UserCards =  ({
               key={index}
               className="-ml-2 flex items-center gap-2 rounded-full bg-white p-[2px]"
             >
-              <Image
-                src={user.image!}
-                alt={user.name!}
+             {
+              user.image &&  <Image
+                src={user.image}
+                alt={user?.name ?? ""}
                 width={30}
                 height={30}
                 className="rounded-full"
               />
-              {/* <p>{user.name}</p> */}
-            </div>
-          );
+             } 
+          </div>
+          )
         })}
     </div>
   );
