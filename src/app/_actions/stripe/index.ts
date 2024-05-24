@@ -69,7 +69,7 @@ export async function createPaymentIntent(
   const paymentIntent: Stripe.PaymentIntent =
     await stripe.paymentIntents.create({
       amount: formatAmountForStripe(
-        Number(data.get("customDonation") as string),
+        Number(data.get("template_price") as string),
         CURRENCY
       ),
       automatic_payment_methods: { enabled: true },
