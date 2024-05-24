@@ -36,7 +36,7 @@ export async function createCheckoutSession(
           price_data: {
             currency: CURRENCY,
             product_data: {
-              name: "Custom amount donation",
+              name: "Buy me coffee",
             },
             unit_amount: formatAmountForStripe(
               Number(data.get("template_price") as string),
