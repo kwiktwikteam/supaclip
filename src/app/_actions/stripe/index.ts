@@ -29,7 +29,7 @@ export async function createCheckoutSession(
   const checkoutSession: Stripe.Checkout.Session =
     await stripe.checkout.sessions.create({
       mode: "payment",
-      submit_type: "pay",
+      submit_type: "auto",
       line_items: [
         {
           quantity: 1,

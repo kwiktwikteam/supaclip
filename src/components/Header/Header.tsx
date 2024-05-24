@@ -12,9 +12,7 @@ const Header = async () => {
   const session: {
     userId: string;
   } | null = await auth();
-  if (session) {
-    // console.log(session)
-  }
+ 
   const { header } = content.home;
   return (
     <nav className="absolute-h-center md:md-5 w-responsive flex-center-between z-10 mt-3 rounded-full bg-white p-2 lg:mt-8">
