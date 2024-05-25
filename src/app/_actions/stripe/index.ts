@@ -28,10 +28,8 @@ export async function createCheckoutSession(
 
   const checkoutSession: Stripe.Checkout.Session =
     await stripe.checkout.sessions.create({
-      // metadata: 
-      payment_method_types: ["card"],
       mode: "payment",
-      // submit_type: "pay",
+      submit_type: "pay",
       line_items: [
         {
           quantity: 1,
@@ -40,25 +38,22 @@ export async function createCheckoutSession(
             product_data: {
               name: "Buy me coffee",
             },
-            unit_amount: Number(data.get("template_price") as string)* 100,
-            // unit_amount: formatAmountForStripe(
-            //   Number(data.get("template_price") as string),
-            //   CURRENCY
-            // ),
+            unit_amount: formatAmountForStripe(
+              Number(data.get("template_price") as string),
+              CURRENCY
+            ),
           },
         },
       ],
-      // ...(ui_mode === "hosted" && {
-      //   success_url: `${origin}`,
-      //   // success_url: `${origin}/stripe-with-checkout?session_id={CHECKOUT_SESSION_ID}`,
-      //   cancel_url: `${origin}`,
-      // }),
-      // ...(ui_mode === "embedded" && {
-      //   return_url: `${origin}?session_id={CHECKOUT_SESSION_ID}`,
-      // }),
+      ...(ui_mode === "hosted" && {
+        success_url: `${origin}`,
+        // success_url: `${origin}/stripe-with-checkout?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}`,
+      }),
+      ...(ui_mode === "embedded" && {
+        return_url: `${origin}?session_id={CHECKOUT_SESSION_ID}`,
+      }),
       ui_mode,
-      success_url: `${origin}`,
-      cancel_url: `${origin}`,
     });
 
 
@@ -73,7 +68,6 @@ export async function createCheckoutSession(
 export async function createPaymentIntent(
   data: FormData
 ): Promise<{ client_secret: string }> {
-    const { CURRENCY } = values;
   const paymentIntent: Stripe.PaymentIntent =
     await stripe.paymentIntents.create({
       amount: formatAmountForStripe(
@@ -84,6 +78,5 @@ export async function createPaymentIntent(
       currency: CURRENCY,
     });
 
-  // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
   return { client_secret: paymentIntent.client_secret as string };
 }
