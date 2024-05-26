@@ -1,68 +1,73 @@
-// import { getToken } from "next-auth/jwt";
 import { type NextRequest, NextResponse } from "next/server";
-
-// note: logger is not available in middleware, using console.log instead
+import { getToken } from "next-auth/jwt";
 
 export const config = {
   matcher: [
-    "/",
-    // "/c/*"
+    /*
+     * Match all paths except for:
+     * 1. /api routes
+     * 2. /_next (Next.js internals)
+     * 3. /_static (inside /public)
+     * 4. all root files inside /public (e.g. /favicon.ico)
+     */
+    "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
   ],
 };
 
-export async function middleware(req: NextRequest) {
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const hostname = req.headers.get("host")!;
-  const reqPathName = req.nextUrl.pathname;
-//   const sessionRequired = ["/account", "/api/account"];
-//   const adminRequired = ["/admin", "/api/admin"];
-//   const adminUsers = process.env.ADMIN_USERS.split(",");
-  const hostedDomain = process.env.NEXT_PUBLIC_BASE_URL!.replace(
-    /http:\/\/|https:\/\//,
-    "",
-  );
-  const hostedDomains = [hostedDomain, `www.${hostedDomain}`];
-  console.log(reqPathName, "pathname")
-  // if custom domain + on root path
-  if (!hostedDomains.includes(hostname) && reqPathName === "/") {
-    console.log(`custom domain used: "${hostname}"`);
+export default async function middleware(req: NextRequest) {
+  const url = req.nextUrl;
 
-    // let res;
-    // let profile;
-    // let url = `${
-    //   process.env.NEXT_PUBLIC_BASE_URL
-    // }/api/search/${encodeURIComponent(hostname)}`;
-    // try {
-    //   res = await fetch(url, {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-    //   profile = await res.json();
-    // } catch (e) {
-    //   console.error(url, e);
-    //   return NextResponse.error(e);
+  // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
+  let hostname = req.headers
+    .get("host")!
+    .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+
+  // special case for Vercel preview deployment URLs
+  if (
+    hostname.includes("---") &&
+    hostname.endsWith(`.${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
+  ) {
+    hostname = `${hostname.split("---")[0]}.${
+      process.env.NEXT_PUBLIC_ROOT_DOMAIN
+    }`;
+  }
+
+  const searchParams = req.nextUrl.searchParams.toString();
+  // Get the pathname of the request (e.g. /, /about, /blog/first-post)
+  const path = `${url.pathname}${
+    searchParams.length > 0 ? `?${searchParams}` : ""
+  }`;
+
+  // rewrites for app pages
+  if (hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
+    // const session = await getToken({ req });
+    // if (!session && path !== "/login") {
+    //   return NextResponse.redirect(new URL("/login", req.url));
+    // } else if (session && path == "/login") {
+    //   return NextResponse.redirect(new URL("/", req.url));
     // }
+    return NextResponse.rewrite(
+      new URL(`/app${path === "/" ? "" : path}`, req.url),
+    );
+  }
 
-    // if (
-    //   profile?.username &&
-    //   profile.settings?.domain &&
-    //   profile.settings.domain === hostname
-    // ) {
-    //   console.log(
-    //     `custom domain matched "${hostname}" for username "${profile.username}" (protocol: "${protocol}")`,
-    //   );
-      // if match found rewrite to custom domain and display profile page
-      return NextResponse.rewrite(
-        new URL(
-          `/c`,
-          `${protocol}://localhost:5000`,
-        ),
-      );
-    }
+  // special case for `vercel.pub` domain
+  if (hostname === "vercel.pub") {
+    return NextResponse.redirect(
+      "https://vercel.com/blog/platforms-starter-kit",
+    );
+  }
 
-    console.error(`custom domain NOT matched "${hostname}"`);
-    return NextResponse.next();
-    
-} 
+  // rewrite root application to `/home` folder
+  if (
+    hostname === "localhost:3000" ||
+    hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
+  ) {
+    return NextResponse.rewrite(
+      new URL(`/home${path === "/" ? "" : path}`, req.url),
+    );
+  }
+
+  // rewrite everything else to `/[domain]/[slug] dynamic route
+  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+}
