@@ -1,7 +1,7 @@
 import React from "react";
 import Title, { SubTitle } from "../ui/Title";
 import content from "~/config/content";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Button from "../ui/Button";
 import { ArrowRight } from "lucide-react";
 import SearchButton from "./SearchButton";
@@ -22,7 +22,7 @@ const Hero = async () => {
       <Image
         src={"/images/hero/bg.png"}
         alt="hero"
-        fill
+        layout="fill" 
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
 
@@ -32,7 +32,7 @@ const Hero = async () => {
         alt="icon"
         width={60}
         height={60}
-        className="absolute z-10 rounded-xl max-xl:hidden lg:left-24"
+        className="block absolute z-10 rounded-xl max-xl:hidden lg:left-24"
       />
       <Image
         src={"/icons/decorations/icon-2.svg"}

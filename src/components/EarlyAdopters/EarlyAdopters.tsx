@@ -1,7 +1,7 @@
 import React, { use } from 'react'
 import Title, { SubTitle } from '../ui/Title'
 import content from '~/config/content';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import EarlyAdopterCard from './EarlyAdopterCard';
 
 const EarlyAdopters = () => {

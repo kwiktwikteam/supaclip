@@ -12,6 +12,9 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    workerThreads: false
+  },
   async rewrites() {
     return [
       {

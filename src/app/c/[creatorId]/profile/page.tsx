@@ -1,5 +1,5 @@
 import { HomeIcon, Video } from "lucide-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { MdAccountCircle } from "react-icons/md";

@@ -1,5 +1,5 @@
 import { Check, Cross } from "lucide-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { BiCloset } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 

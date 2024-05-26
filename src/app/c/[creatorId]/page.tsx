@@ -1,6 +1,6 @@
 import { desc, eq } from "drizzle-orm";
 import { HomeIcon, Video } from "lucide-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CgAdd } from "react-icons/cg";

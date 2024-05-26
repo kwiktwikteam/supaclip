@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Link from 'next/link'
 import Button from '../ui/Button'
 import content from '~/config/content'

@@ -1,7 +1,7 @@
 import React from 'react'
 import Title from '../ui/Title'
 import content from '~/config/content'
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import StepCard from './StepCard';
 
 const Steps = () => {

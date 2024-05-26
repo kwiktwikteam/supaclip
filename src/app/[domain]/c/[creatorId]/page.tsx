@@ -1,4 +1,8 @@
-const page = () => {
+const page = ({
+    params
+}) => {
+
+    console.log(params)
     return (
         <div>
             c id

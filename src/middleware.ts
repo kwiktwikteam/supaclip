@@ -10,7 +10,7 @@ export const config = {
      * 3. /_static (inside /public)
      * 4. all root files inside /public (e.g. /favicon.ico)
      */
-    "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
+    "/((?!api/|_next/|_static/| _next/image|images|icons|_vercel|[\\w-]+\\.\\w+).*)",
   ],
 };
 
@@ -47,7 +47,8 @@ export default async function middleware(req: NextRequest) {
     //   return NextResponse.redirect(new URL("/", req.url));
     // }
     return NextResponse.rewrite(
-      new URL(`/app${path === "/" ? "" : path}`, req.url),
+      // new URL(`/app${path === "/" ? "" : path}`, req.url),
+      new URL(`${path === "/" ? "" : path}`, req.url),
     );
   }
 
@@ -64,10 +65,11 @@ export default async function middleware(req: NextRequest) {
     hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
   ) {
     return NextResponse.rewrite(
-      new URL(`/${path === "/" ? "" : path}`, req.url),
+      new URL(`${path === "/" ? "" : path}`, req.url),
     );
   }
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
+  console.log("This ran")
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }
