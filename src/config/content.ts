@@ -63,14 +63,14 @@ const content = {
                 },
                 {
                     "id": 2, 
-                    "height" : 330,
+                    "height" : 310,
                     "title": "Students", 
                     "icon": "/images/usecases/student.png",
                     "desc": "Get most out of your long lectures using summary & Ai assistant"
                 },
                 {
                     "id": 3, 
-                    "height" : 330,
+                    "height" : 310,
                     "title": "Podcast Hosts", 
                     "icon": "/images/usecases/podcast.png",
                     "desc": "Offer show notes, transcripts, chatbot for episode recaps and engagement."

@@ -56,6 +56,9 @@ export async function createCheckoutSession(
       ui_mode,
     });
 
+
+  console.log("Debugging", checkoutSession)
+
   return {
     client_secret: checkoutSession.client_secret,
     url: checkoutSession.url,
@@ -65,17 +68,15 @@ export async function createCheckoutSession(
 export async function createPaymentIntent(
   data: FormData
 ): Promise<{ client_secret: string }> {
-    const { CURRENCY } = values;
   const paymentIntent: Stripe.PaymentIntent =
     await stripe.paymentIntents.create({
       amount: formatAmountForStripe(
-        Number(data.get("customDonation") as string),
+        Number(data.get("template_price") as string),
         CURRENCY
       ),
       automatic_payment_methods: { enabled: true },
       currency: CURRENCY,
     });
 
-  // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
   return { client_secret: paymentIntent.client_secret as string };
 }
