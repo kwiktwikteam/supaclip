@@ -71,5 +71,5 @@ export default async function middleware(req: NextRequest) {
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
   console.log("This ran")
-  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+  return NextResponse.rewrite(new URL(`/${hostname}${path}?creatorId=b2bd9b41-90b4-443c-8047-20dc70dea4bc`, req.url));
 }
