@@ -1,5 +1,9 @@
 const page = ({
     params
+}: {
+    params: {
+        creatorId: string;
+    }
 }) => {
 
     console.log(params)
