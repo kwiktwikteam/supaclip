@@ -27,7 +27,7 @@ const Hero = async () => {
       />
 
       {/* ICONS */}
-      <Image
+      {/* <Image
         src={"/icons/decorations/icon-1.svg"}
         alt="icon"
         width={60}
@@ -54,7 +54,7 @@ const Hero = async () => {
         width={60}
         height={60}
         className="2xl:opacity-1 absolute z-10 rounded-xl max-xl:hidden lg:right-80 lg:top-80 lg:opacity-50"
-      />
+      /> */}
 
       <Title variant="xl" className="z-20">
         {hero.title[0]}
@@ -74,13 +74,13 @@ const Hero = async () => {
         <div className="space-y-20">
           <div className="grid place-content-center ">
             <div className="flex-col-center-center relative gap-4">
-              <Image
+              {/* <Image
                 src={"/icons/hero/arrow.svg"}
                 alt="arrow"
                 width={24}
                 height={30}
                 className="absolute left-2 top-0 max-lg:hidden"
-              />
+              /> */}
               {/* <Image
                 src={"/images/hero/users.png"}
                 alt="users"
