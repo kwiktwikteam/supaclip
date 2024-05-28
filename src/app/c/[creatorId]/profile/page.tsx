@@ -1,66 +1,80 @@
+
+import { Session } from "inspector";
 import { HomeIcon, Video } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { MdAccountCircle } from "react-icons/md";
-import { auth, signOut } from "~/auth";
-import { Input } from "~/components/ui/input";
+import { auth } from "~/auth";
+import FormProfile from "~/components/Profile/FormProfile";
 
-export default async function page({
+import SignOut from "~/components/ui/SignOut";
+import { getOrCreateProfile } from "~/lib/helpers/profile";
+
+export default async function Page({
   params,
 }: {
   params: {
     creatorId: string;
   };
 }) {
+
+
   const session = await auth();
-    // console.log(session)
-  if (!session) {
-    return redirect("/api/auth/signin?callbackUrl=" + "/c/" + params.creatorId );
+
+  if(!session) {
+    return redirect("/api/auth/signin?callbackUrl=/c/" + session?.user?.id);
   }
 
+  const userProfile = await getOrCreateProfile();
+  console.log("user profile ",userProfile) 
   return (
-    <div className="flex h-screen w-screen justify-center overflow-hidden  bg-black pt-12 text-white">
+    <div className="relative mx-auto flex h-screen w-screen max-w-md justify-center overflow-hidden overflow-x-hidden  bg-black/80 pt-12 text-white">
+      {/* <Image src='/images/hero/bg.png' alt="bg" layout="fill" className="-z-10" />
+      <Image src="/bg.png" alt="bg" layout="fill" className="-z-20 opacity-50" /> */}
+
       <div className="w-full space-y-20">
         {/* profile image */}
+
         <div className="profileimage text-center">
-          <Image
-            src={session.user.image}
-            alt={session.user?.name}
-            width={150}
-            height={150}
-            className="mx-auto h-16 w-16 rounded-full"
-          />
-          <p className="font-semibold">{session.user?.name}</p>
+          {session?.user?.image ? (
+            <Image
+              src={session?.user?.image}
+              alt={session?.user?.name ?? "Profile Image"}
+              width={150}
+              height={150}
+              className="mx-auto h-16 w-16 rounded-full"
+            />
+          ) : (
+            <MdAccountCircle className="mx-auto h-16 w-16 rounded-full text-white" />
+          )}
+          <p className="font-semibold">{session?.user?.name}</p>
         </div>
 
         {/* user info */}
-        <div className="mx-auto w-[90%] space-y-8">
-          <div className="flex w-full flex-col gap-2">
-            <label htmlFor="name" className="text-xl font-semibold">
-              Name
-            </label>
+        <div className="mx-auto w-[90%] space-y-4">
+          {/* profile form - about, socials, domain */}
+          <div className="form-group flex flex-col">
+            <label>Name</label>
             <input
               type="text"
-              name="name"
-              value={session.user.name}
-              disabled={true}
-              className="rounded-lg border bg-white/20 p-3"
+              defaultValue={session?.user?.name}
+              disabled
+              className="rounded-lg border bg-white/20 p-2 text-sm"
             />
           </div>
-          <div className="flex w-full flex-col gap-2">
-            <label htmlFor="email" className="text-xl font-semibold">
-                Email 
-            </label>
+          <div className="form-group flex flex-col">
+            <label>Email</label>
             <input
-              type="text"
-              name="email"
-              value={session.user.email}
-              disabled={true}
-              className="rounded-lg border bg-white/20 p-3"
+              type="email"
+              defaultValue={session?.user?.email}
+              disabled
+              className="rounded-lg border bg-white/20 p-2 text-sm"
             />
           </div>
 
+          {userProfile ? <FormProfile profile={userProfile} /> : null}
           <SignOut />
         </div>
       </div>
@@ -69,9 +83,7 @@ export default async function page({
           <Link href="/">
             <HomeIcon className="h-8 w-8 text-white" />
           </Link>
-          <div
-            className="h-full self-stretch rounded-full bg-white p-2 text-black"
-          >
+          <div className="h-full self-stretch rounded-full bg-white p-2 text-black">
             <MdAccountCircle className="h-10 w-10 " />
           </div>
           <Link href={`/c/${session?.user?.id}/profile`}>
@@ -84,21 +96,3 @@ export default async function page({
 }
 
 
-export function SignOut() {
-  return (
-    <form
-      className="flex  w-full items-center justify-center"
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
-    >
-      <button
-        type="submit"
-        className="mx-auto w-full rounded-full border-2 border-red-600 px-4 py-3 text-red-600"
-      >
-        Log out
-      </button>
-    </form>
-  );
-}
