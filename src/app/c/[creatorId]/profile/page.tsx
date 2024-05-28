@@ -29,6 +29,8 @@ export default async function Page({
 
   const userProfile = await getOrCreateProfile();
   console.log("user profile ",userProfile) 
+
+  
   return (
     <div className="relative mx-auto flex h-screen w-screen max-w-md justify-center overflow-hidden overflow-x-hidden  bg-black/80 pt-12 text-white">
       {/* <Image src='/images/hero/bg.png' alt="bg" layout="fill" className="-z-10" />
