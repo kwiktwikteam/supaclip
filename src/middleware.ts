@@ -2,19 +2,13 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { InferSelectModel } from "drizzle-orm";
 import { profiles } from "./server/db/schema";
+import { ignorePatterns } from ".eslintrc.cjs";
 
 type Profile = InferSelectModel<typeof profiles>;
 export const config = {
   matcher: [
-    /*
-     * Match all paths except for:
-     * 1. /api routes
-     * 2. /_next (Next.js internals)
-     * 3. /_static (inside /public)
-     * 4. all root files inside /public (e.g. /favicon.ico)
-     */
-    "/((?!api/|_next/|_static/| _next/image|images|icons|_vercel|[\\w-]+\\.\\w+).*)",
-  ],
+    "/((?!api/|_next/|_static/|_vercel|icons|images|[\\w-]+\\.\\w+).*)",
+  ]
 };
 
 export default async function middleware(req: NextRequest) {
@@ -76,16 +70,19 @@ export default async function middleware(req: NextRequest) {
   // console.log("This ran")
 
   try {
-    const data = await fetch(`/api/profile/domain/${hostname}`);
-
+    const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
+      method: "POST"
+    });
+    // console.log("This ran")
     const response: Promise<{
       status: boolean; 
       message: string;
       profile?: Profile | undefined;
     }> = await data.json();
 
+    console.log(response)
     if(!response.status){
-      return NextResponse.rewrite("https://www.supaclip.pro")
+      return NextResponse.rewrite(process.env.NEXT_PUBLIC_BASE_URL)
     } else if(response.status && !response.profile?.domainVerified) {
       return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));    
     }
