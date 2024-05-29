@@ -21,7 +21,7 @@ export default async function middleware(req: NextRequest) {
   // special case for Vercel preview deployment URLs
   if (
     hostname.includes("---") &&
-    hostname.endsWith(`.${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
+    hostname.endsWith(`${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
   ) {
     hostname = `${hostname.split("---")[0]}.${
       process.env.NEXT_PUBLIC_ROOT_DOMAIN
@@ -35,7 +35,7 @@ export default async function middleware(req: NextRequest) {
   }`;
 
   // rewrites for app pages
-  if (hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
+  if (hostname == `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
     // const session = await getToken({ req });
     // if (!session && path !== "/login") {
     //   return NextResponse.redirect(new URL("/login", req.url));
@@ -49,11 +49,11 @@ export default async function middleware(req: NextRequest) {
   }
 
   // special case for `vercel.pub` domain
-  if (hostname === "vercel.app") {
-    return NextResponse.redirect(
-      "https://www.supaclip.pro",
-    );
-  }
+  // if (hostname === "vercel.app") {
+  //   return NextResponse.redirect(
+  //     "https://www.supaclip.pro",
+  //   );
+  // }
 
   // rewrite root application to `/home` folder
   if (
