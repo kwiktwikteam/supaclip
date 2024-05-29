@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type NextRequest, NextResponse } from "next/server";
 import { type InferSelectModel } from "drizzle-orm";
-import { type profiles } from "./server/db/schema";
+import { type profiles } from "./src/server/db/schema";
 
 type Profile = InferSelectModel<typeof profiles>;
 export const config = {
@@ -19,14 +19,14 @@ export default async function middleware(req: NextRequest) {
     .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
 
   // special case for Vercel preview deployment URLs
-  if (
-    hostname.includes("---") &&
-    hostname.endsWith(`${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
-  ) {
-    hostname = `${hostname.split("---")[0]}.${
-      process.env.NEXT_PUBLIC_ROOT_DOMAIN
-    }`;
-  }
+  // if (
+    
+  //   hostname.endsWith(`${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
+  // ) {
+  //   hostname = `${hostname.split("---")[0]}.${
+  //     process.env.NEXT_PUBLIC_ROOT_DOMAIN
+  //   }`;
+  // }
 
   const searchParams = req.nextUrl.searchParams.toString();
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
@@ -47,27 +47,6 @@ export default async function middleware(req: NextRequest) {
       new URL(`${path === "/" ? "" : path}`, req.url),
     );
   }
-
-  // special case for `vercel.pub` domain
-  // if (hostname === "vercel.app") {
-  //   return NextResponse.redirect(
-  //     "https://www.supaclip.pro",
-  //   );
-  // }
-
-  // rewrite root application to `/home` folder
-  if (
-    hostname === "localhost:3000" ||
-    hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
-  ) {
-    return NextResponse.rewrite(
-      new URL(`${path === "/" ? "" : path}`, req.url),
-    );
-  }
-
-  // rewrite everything else to `/[domain]/[slug] dynamic route
-  // console.log("This ran")
-
   try {
     const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
       method: "POST"

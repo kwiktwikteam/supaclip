@@ -8,7 +8,7 @@ const Page = async () => {
         return redirect("/api/auth/signin")
     }
 
-    redirect(`/c/${session.user.id}`)
+    redirect(`generate`)
 }
 
 export default Page;
