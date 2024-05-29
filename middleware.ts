@@ -52,14 +52,14 @@ export default async function middleware(req: NextRequest) {
       method: "POST"
     });
     // console.log("This ran")
-    const response: Promise<{
+    const response: {
       status: boolean; 
       message: string;
       profile?: Profile | undefined;
-    }> = await data.json();
+    }= await data.json();
 
     
-    return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}${path}`: path, req.url));
+    return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}${path}`: path + `?creatorId${response.profile?.userId ?? ""}`, req.url));
 
   } catch (error) {
     return NextResponse.next(); 
