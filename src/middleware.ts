@@ -81,11 +81,11 @@ export default async function middleware(req: NextRequest) {
 
     console.log(response)
     if(!response.status){
-      return NextResponse.rewrite(process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.supaclip.pro")
+      return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}$${path}` : path, req.url))
     } else if(response.status && !response.profile?.domainVerified) {
       return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));    
     }
-    return NextResponse.rewrite(new URL(`/${hostname}${path}?creatorId=${response?.profile?.userId ?? ""}`, req.url));
+    return NextResponse.rewrite(new URL(`${path}?creatorId=${response?.profile?.userId ?? ""}`, req.url));
 
   } catch (error) {
     return NextResponse.rewrite("https://www.supaclip.pro"); 
