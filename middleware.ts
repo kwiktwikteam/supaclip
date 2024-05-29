@@ -58,12 +58,7 @@ export default async function middleware(req: NextRequest) {
       profile?: Profile | undefined;
     }> = await data.json();
 
-    if(!response.status){
-      return NextResponse.next();
-      // return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}$${path}` : , req.url))
-    } else if(response?.status && !response?.profile?.domainVerified) {
-      return NextResponse.next();   
-    }
+    
     return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}${path}`: path, req.url));
 
   } catch (error) {
