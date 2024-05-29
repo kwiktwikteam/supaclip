@@ -12,7 +12,7 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  staticPageGenerationTimeout: 1000,
+  staticPageGenerationTimeout: 2000,
   async rewrites() {
     return [
       {
