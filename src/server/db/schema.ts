@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { eq, relations, sql } from "drizzle-orm";
 import {
   decimal,
   index,
@@ -98,14 +98,16 @@ export const profiles = createTable(
     facebookLink: text("facebookLink"),
     instagramLink: text("instagramLink"),
 
-    domain: text("domain"),
+    domain: text("domain").unique(),
     domainVerified: boolean("domainVerified").default(false),
     premiumUser: boolean("premiumUser").default(false),
     paymentId: text("paymentId"),
 
     createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`).notNull(),
     updatedAt: timestamp("updatedAt"),
-  }
+  },  (t) => ({
+    profileDomainUnique: uniqueIndex().on(t.domain, t.domainVerified).where(eq(t.domainVerified, true))
+  }) 
 )
 
 const profilesRelations = relations(profiles, ({ one }) => ({

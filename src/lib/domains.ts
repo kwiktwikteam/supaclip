@@ -1,9 +1,14 @@
+"use server"
+
+import verifyDomainValues from "~/config/domain.vercel";
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { env } from "~/env";
 import {
   DomainResponse,
   DomainConfigResponse,
   DomainVerificationResponse,
 } from "~/lib/types";
+import { db } from "~/server/db";
 
 export const addDomainToVercel = async (domain: string) => {
   return await fetch(
@@ -15,7 +20,7 @@ export const addDomainToVercel = async (domain: string) => {
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${}`,
+        Authorization: `Bearer ${env.AUTH_BEARER_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -116,6 +121,71 @@ export const verifyDomain = async (
   ).then((res) => res.json());
 };
 
+
+export const getAllDomains = async() => {
+    return await fetch(
+        `https://api.vercel.com/v8/projects/${env.PROJECT_ID_VERCEL}/domains?teamId=${env.VERCEL_TEAM_ID}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${env.AUTH_BEARER_TOKEN}`,
+          },
+        },
+      ).then((res) => res.json());
+    
+}
+
+
+export const domainConfigValuesAll = async(domain: string, add: boolean) => {
+  if(add) {
+    await addDomainToVercel(domain)
+  }
+
+  const configResponse = await getConfigResponse(domain)
+  console.log(configResponse)
+        const misconfigured = {
+            status: configResponse.misconfigured,
+            type: verifyDomainValues[0]?.Type, 
+            name: verifyDomainValues[0]?.Name,
+            value: verifyDomainValues[0]?.Value, 
+            ttl: verifyDomainValues[0]?.TTL
+        }
+       
+        // verify domain res
+      //  const verifyRes = await verifyDomain(domain)
+
+       const verifyRes = await getDomainResponse(domain)
+      //  console.log(res)
+       
+       console.log(verifyRes) 
+        let verifyResponse: {
+            status: boolean;
+            type?: string;
+            domain?: string;
+            value?: string;
+        } = {
+            status: verifyRes.verified,
+        }
+        
+      if(verifyRes?.verification && verifyRes.verification.length > 0) {
+          verifyResponse = {
+              status: verifyRes.verified,
+              type: verifyRes.verification[0]?.type ?? "", 
+              domain: verifyRes.verification[0]?.domain ?? "",
+              value: verifyRes.verification[0]?.value ?? "",
+          }
+      }
+
+    const isDomainVerified = verifyResponse.status == true && misconfigured.status == false
+    
+  return {
+    misconfigured,
+    verified: verifyResponse,
+    isDomainVerified
+  }
+}
+
+
 export const getSubdomain = (name: string, apexName: string) => {
   if (name === apexName) return null;
   return name.slice(0, name.length - apexName.length - 1);
@@ -136,8 +206,3 @@ export const getApexDomain = (url: string) => {
   // if it's a normal domain (e.g. dub.sh), we return the domain
   return domain;
 };
-
-// courtesy of ChatGPT: https://sharegpt.com/c/pUYXtRs
-export const validDomainRegex = new RegExp(
-  /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/,
-);

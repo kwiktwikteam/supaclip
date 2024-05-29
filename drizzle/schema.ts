@@ -52,4 +52,6 @@ export const vid-b-web_profiles = pgTable("vid-b-web_profiles", {
 	domainVerified: boolean("domainVerified").default(false),
 	createdAt: timestamp("createdAt", { mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updatedAt", { mode: 'string' }),
+	premiumUser: boolean("premiumUser").default(false),
+	paymentId: text("paymentId"),
 });
