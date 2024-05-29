@@ -42,7 +42,7 @@ export default async function Page({
 
   let configResponse;
   if(userProfile?.domain) {
-    configResponse = await domainConfigValuesAll(userProfile.domain);
+    configResponse = await domainConfigValuesAll(userProfile.domain, false);
   }
   return (
     <div className="relative mx-auto flex min-h-screen w-screen max-w-md justify-center  overflow-x-hidden  bg-black/80 pt-12 text-white">

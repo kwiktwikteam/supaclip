@@ -19,12 +19,12 @@ if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 
 export const db = drizzle(conn, { schema });
 
-const migrateDb = async () => {
-  try {
-   await migrate(db, { migrationsFolder: "./drizzle" }); 
-  } catch (error: any) {
-    console.log(error.message) 
-  }
-}
+// const migrateDb = async () => {
+//   try {
+//    await migrate(db, { migrationsFolder: "./drizzle" }); 
+//   } catch (error: any) {
+//     console.log(error.message) 
+//   }
+// }
 
-migrateDb().catch(console.error);
+// migrateDb().catch(console.error);

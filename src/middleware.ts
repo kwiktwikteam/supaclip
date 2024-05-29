@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { InferSelectModel } from "drizzle-orm";
+import { profiles } from "./server/db/schema";
 
+type Profile = InferSelectModel<typeof profiles>;
 export const config = {
   matcher: [
     /*
@@ -53,9 +56,9 @@ export default async function middleware(req: NextRequest) {
   }
 
   // special case for `vercel.pub` domain
-  if (hostname === "vercel.pub") {
+  if (hostname === "vercel.app") {
     return NextResponse.redirect(
-      "https://vercel.com/blog/platforms-starter-kit",
+      "https://www.supaclip.pro",
     );
   }
 
@@ -70,6 +73,25 @@ export default async function middleware(req: NextRequest) {
   }
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
-  console.log("This ran")
-  return NextResponse.rewrite(new URL(`/${hostname}${path}?creatorId=b2bd9b41-90b4-443c-8047-20dc70dea4bc`, req.url));
+  // console.log("This ran")
+
+  try {
+    const data = await fetch(`/api/profile/domain/${hostname}`);
+
+    const response: Promise<{
+      status: boolean; 
+      message: string;
+      profile?: Profile | undefined;
+    }> = await data.json();
+
+    if(!response.status){
+      return NextResponse.rewrite("https://www.supaclip.pro")
+    } else if(response.status && !response.profile?.domainVerified) {
+      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));    
+    }
+    return NextResponse.rewrite(new URL(`/${hostname}${path}?creatorId=${response?.profile?.userId ?? ""}`, req.url));
+
+  } catch (error) {
+    return NextResponse.rewrite("https://www.supaclip.pro"); 
+  }
 }

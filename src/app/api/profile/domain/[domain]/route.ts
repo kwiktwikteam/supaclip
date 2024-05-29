@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm"
 import { auth } from "~/auth"
 import verifyDomainValues from "~/config/domain.vercel"
 import { addDomainToVercel, domainConfigValuesAll, getConfigResponse, removeDomainFromVercelProject, removeDomainFromVercelTeam, verifyDomain } from "~/lib/domains"
-import { getOrCreateProfile } from "~/lib/helpers/profile"
+import { getOrCreateProfile, profileWDomain } from "~/lib/helpers/profile"
 import { db } from "~/server/db"
 import { profiles, users } from "~/server/db/schema"
 
@@ -77,3 +77,9 @@ export async function GET(request: Request, { params }: { params: { domain: stri
     }
 }
 
+
+export async function POST(request: Request, { params }: { params: { domain: string } }) {
+    const response = await profileWDomain(params.domain);
+    
+    return Response.json(response)
+}

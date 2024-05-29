@@ -26,9 +26,15 @@ const Header = ({ creatorId } : { creatorId : string}) => {
             <Image src={"/logo.svg"} alt="logo" width={40} height={40} />
             Supaclip
           </div>
-          <Link className="" href={`/c/${creatorId}`}>
-            <Button>Creator Page</Button>
-          </Link>
+          {creatorId ? (
+            <Link className="" href={`/c/${creatorId}`}>
+              <Button>Creator Page</Button>
+            </Link>
+          ) : (
+            <Link className="" href={`https://www.supaclip.pro`}>
+              <Button>Supaclip Pro</Button>
+            </Link>
+          )}
         </div>
       </nav>
     );

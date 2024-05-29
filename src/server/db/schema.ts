@@ -1,7 +1,6 @@
-import { eq, relations, sql } from "drizzle-orm";
+import {relations, sql } from "drizzle-orm";
 import {
   decimal,
-  index,
   integer,
   pgTableCreator,
   primaryKey,
@@ -106,7 +105,7 @@ export const profiles = createTable(
     createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`).notNull(),
     updatedAt: timestamp("updatedAt"),
   },  (t) => ({
-    profileDomainUnique: uniqueIndex().on(t.domain, t.domainVerified).where(eq(t.domainVerified, true))
+    profileDomainUnique: uniqueIndex().on(t.domain, t.userId)
   }) 
 )
 

@@ -1,5 +1,5 @@
-import { pgTable, pgEnum, serial, text, numeric, varchar, timestamp, uniqueIndex, foreignKey, boolean } from "drizzle-orm/pg-core"
-  import { sql } from "drizzle-orm"
+import { pgTable, pgEnum, serial, text, numeric, varchar, timestamp, uniqueIndex, unique, boolean } from "drizzle-orm/pg-core"
+
 
 export const aal_level = pgEnum("aal_level", ['aal1', 'aal2', 'aal3'])
 export const code_challenge_method = pgEnum("code_challenge_method", ['s256', 'plain'])
@@ -54,4 +54,10 @@ export const vid-b-web_profiles = pgTable("vid-b-web_profiles", {
 	updatedAt: timestamp("updatedAt", { mode: 'string' }),
 	premiumUser: boolean("premiumUser").default(false),
 	paymentId: text("paymentId"),
+},
+(table) => {
+	return {
+		domain_userId_idx: uniqueIndex("vid-b-web_profiles_domain_userId_index").on(table.userId, table.domain),
+		vid-b-web_profiles_domain_unique: unique("vid-b-web_profiles_domain_unique").on(table.domain),
+	}
 });

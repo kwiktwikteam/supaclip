@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     } catch (error) {
         return Response.json({
             status: false, 
-            error: error.message,
+            error: error.message ?? "",
             message: "Something went wrong! Please try again later."
         })
     }
