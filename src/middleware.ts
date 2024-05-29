@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type NextRequest, NextResponse } from "next/server";
-import { InferSelectModel } from "drizzle-orm";
-import { profiles } from "./server/db/schema";
-import { ignorePatterns } from ".eslintrc.cjs";
+import { type InferSelectModel } from "drizzle-orm";
+import { type profiles } from "./server/db/schema";
 
 type Profile = InferSelectModel<typeof profiles>;
 export const config = {
@@ -82,7 +81,7 @@ export default async function middleware(req: NextRequest) {
 
     console.log(response)
     if(!response.status){
-      return NextResponse.rewrite(process.env.NEXT_PUBLIC_BASE_URL)
+      return NextResponse.rewrite(process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.supaclip.pro")
     } else if(response.status && !response.profile?.domainVerified) {
       return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));    
     }
