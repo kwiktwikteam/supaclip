@@ -21,7 +21,7 @@ const config = {
   experimental: {
     workerThreads: false,
   },
-  staticPageGenerationTimeout: 120,
+  staticPageGenerationTimeout: 600,
   // webpack: (config, { webpack, isServer }) => {
   //   if (isServer) {
   //     config.plugins.push(
