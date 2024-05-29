@@ -89,6 +89,6 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL(`${path}?creatorId=${response?.profile?.userId ?? ""}`, req.url));
 
   } catch (error) {
-    return NextResponse.rewrite("https://www.supaclip.pro"); 
+    return NextResponse.next(); 
   }
 }
