@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { auth } from "~/auth"
 import { db } from "~/server/db";
-import { profiles, profiles, users } from "~/server/db/schema";
+import { profiles, users } from "~/server/db/schema";
 
 
 export const getOrCreateProfile = async () => {
@@ -60,8 +60,21 @@ export const profileWDomain = async(domain : string) => {
         message: "No profile with this domain!"
       }
     }
+
+    const verifiedDomain = allProfiles.filter((profile) => profile.domainVerified == true)
+
+    if(verifiedDomain[0]) {
+      return {
+        status: true, 
+        verified: true,
+        message: "Profile/s found with this domain!",
+        profiles: verifiedDomain
+      }
+    }
     return {
       status: true, 
-      message: "Profile/s found with this domain!"
+      verified: false,
+      message: "Profile/s found with this domain!",
+      profiles: allProfiles
     }
 }
