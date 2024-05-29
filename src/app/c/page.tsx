@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "~/auth";
 
-const Page = () => {
+const Page = async () => {
     const session = await auth();
 
     if(!session) {

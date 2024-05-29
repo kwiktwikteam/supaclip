@@ -81,9 +81,10 @@ export default async function middleware(req: NextRequest) {
 
     console.log(response)
     if(!response.status){
-      return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}$${path}` : path, req.url))
+      return NextResponse.next();
+      // return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}$${path}` : , req.url))
     } else if(response.status && !response.profile?.domainVerified) {
-      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));    
+      return NextResponse.next();   
     }
     return NextResponse.rewrite(new URL(`${path}?creatorId=${response?.profile?.userId ?? ""}`, req.url));
 
