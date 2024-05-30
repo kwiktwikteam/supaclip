@@ -7,6 +7,8 @@ import Pricing from "~/components/Pricing/Pricing";
 import Steps from "~/components/Steps/Steps";
 import Subscribe from "~/components/Subscribe/Subscribe";
 
+export const dynamic = 'force-dynamic'
+
 export default function HomePage({
   searchParams
 }: {

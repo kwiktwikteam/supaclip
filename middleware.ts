@@ -11,13 +11,17 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  const hostname = req.headers.get("host");
+  const reqPathName = req.nextUrl.pathname;
   const url = req.nextUrl;
 
-  // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
-  const hostname = req.headers
-    .get("host")!
-    .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+  // const hostedDomain = process.env.NEXT_PUBLIC_BASE_URL.replace(
+  //   /http:\/\/|https:\/\//,
+  //   "",
+  // );
 
+  // const hostedDomains = [hostedDomain, `www.${hostedDomain}`];
   // special case for Vercel preview deployment URLs
   // if (
     
@@ -48,26 +52,23 @@ export default async function middleware(req: NextRequest) {
   //     new URL(`${path === "/" ? `/${hostname}` : path}`, req.url),
   //   );
   // }
+  let response;
+  
   try {
     const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
       method: "POST"
     });
     // console.log("This ran")
-    const response: {
-      status: boolean; 
-      message: string;
-      profile?: Profile | undefined;
-    }= await data.json();
-
-    console.log("ran 2")
-    if(response.status && response.profile?.domainVerified) {
-      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
-    }
-    // return NextResponse.rewrite(new URL((path == "/" || !path) ? `/${hostname}${path}`: path + `?creatorId${response.profile?.userId ?? ""}`, req.url));
-
+    response = await data.json();
   } catch (error) {
-    console.log("ran 3")
-    console.log(error.message)
-    return NextResponse.next(); 
+    return NextResponse.error(e); 
   }
+
+  if(response.status && response.profile?.domainVerified) {
+    console.log(new URL(`/${hostname}${path}`, req.url))
+    return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+  }
+
+
+  return NextResponse.next();
 }
