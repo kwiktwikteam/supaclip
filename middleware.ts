@@ -14,7 +14,7 @@ export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
-  let hostname = req.headers
+  const hostname = req.headers
     .get("host")!
     .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
 
@@ -59,7 +59,7 @@ export default async function middleware(req: NextRequest) {
     }= await data.json();
 
     
-    return NextResponse.rewrite(new URL(path == "/" ? `/${hostname}${path}`: path + `?creatorId${response.profile?.userId ?? ""}`, req.url));
+    return NextResponse.rewrite(new URL((path == "/" || !path) ? `/${hostname}`: path + `?creatorId${response.profile?.userId ?? ""}`, req.url));
 
   } catch (error) {
     return NextResponse.next(); 
