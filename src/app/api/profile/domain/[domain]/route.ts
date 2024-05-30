@@ -79,7 +79,27 @@ export async function GET(request: Request, { params }: { params: { domain: stri
 
 
 export async function POST(request: Request, { params }: { params: { domain: string } }) {
-    const response = await profileWDomain(params.domain);
+    const allProfiles = await db
+    .select()
+    .from(profiles)
+    .where(eq(profiles.domain, params.domain))
+    
+    console.log(allProfiles)
+    let response;
+    if(!allProfiles[0]) {
+      response ={
+        status: false, 
+        message: "No profile with this domain!"
+      }
+    } else {
+        response = {
+      status: true,
+      message: "Domain exists!", 
+      profile: allProfiles[0]
+    }
+    }
+
+    
     
     return Response.json(response)
 }

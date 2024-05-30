@@ -54,6 +54,8 @@ export const profileWDomain = async(domain : string) => {
     .from(profiles)
     .where(eq(profiles.domain, domain))
     
+    console.log(allProfiles)
+    
     if(!allProfiles[0]) {
       return {
         status: false, 

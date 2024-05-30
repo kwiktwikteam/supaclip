@@ -35,18 +35,19 @@ export default async function middleware(req: NextRequest) {
   }`;
 
   // rewrites for app pages
-  if (hostname == `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-    // const session = await getToken({ req });
-    // if (!session && path !== "/login") {
-    //   return NextResponse.redirect(new URL("/login", req.url));
-    // } else if (session && path == "/login") {
-    //   return NextResponse.redirect(new URL("/", req.url));
-    // }
-    return NextResponse.rewrite(
-      // new URL(`/app${path === "/" ? "" : path}`, req.url),
-      new URL(`${path === "/" ? "" : path}`, req.url),
-    );
-  }
+  // if (hostname == `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
+  //   // const session = await getToken({ req });
+  //   // if (!session && path !== "/login") {
+  //   //   return NextResponse.redirect(new URL("/login", req.url));
+  //   // } else if (session && path == "/login") {
+  //   //   return NextResponse.redirect(new URL("/", req.url));
+  //   // }
+  //   console.log("ran 1")
+  //   return NextResponse.rewrite(
+  //     // new URL(`/app${path === "/" ? "" : path}`, req.url),
+  //     new URL(`${path === "/" ? `/${hostname}` : path}`, req.url),
+  //   );
+  // }
   try {
     const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
       method: "POST"
@@ -58,10 +59,15 @@ export default async function middleware(req: NextRequest) {
       profile?: Profile | undefined;
     }= await data.json();
 
-    
-    return NextResponse.rewrite(new URL((path == "/" || !path) ? `/${hostname}`: path + `?creatorId${response.profile?.userId ?? ""}`, req.url));
+    console.log("ran 2")
+    if(response.status && response.profile?.domainVerified) {
+      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+    }
+    // return NextResponse.rewrite(new URL((path == "/" || !path) ? `/${hostname}${path}`: path + `?creatorId${response.profile?.userId ?? ""}`, req.url));
 
   } catch (error) {
+    console.log("ran 3")
+    console.log(error.message)
     return NextResponse.next(); 
   }
 }

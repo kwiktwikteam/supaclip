@@ -5,14 +5,16 @@ import Link from 'next/link'
 import Button from '../ui/Button'
 import content from '~/config/content'
 import { auth } from '~/auth'
-
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { NextResponse } from 'next/server'
 
 
 const Header = async () => {
   const session: {
-    userId: string;
-  } | null = await auth();
- 
+    userId: string | undefined;
+  } = await auth();
+  
   const { header } = content.home;
   return (
     <nav className="absolute-h-center md:md-5 w-responsive flex-center-between z-10 mt-3 rounded-full bg-white p-2 lg:mt-8">
@@ -32,11 +34,13 @@ const Header = async () => {
           </Link>
         ))}
       </ul>
-      <Link href={session?.userId ? `/c/${session.userId}` : "/api/auth/signin"}>
-        <Button className="flex-center gap-5">
-          {session?.userId ? header.button.title : "Sign in"}
-        </Button>
-      </Link>
+        <Link
+          href={session?.userId ? `/c/${session.userId}` : "/api/auth/signin"}
+        >
+          <Button className="flex-center gap-5">
+            {session?.userId ? header.button.title : "Sign in"}
+          </Button>
+        </Link>
     </nav>
   );
 };
