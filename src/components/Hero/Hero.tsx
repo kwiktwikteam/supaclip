@@ -9,6 +9,8 @@ import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
 import { desc } from "drizzle-orm";
 
+export const dynamic = "force-dynamic";
+
 const Hero = async () => {
   const { hero } = content.home;
   const userImages = await db.select({

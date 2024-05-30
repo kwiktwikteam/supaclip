@@ -1,18 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type NextRequest, NextResponse } from "next/server";
 import { type InferSelectModel } from "drizzle-orm";
-import { type profiles } from "./src/server/db/schema";
+import { type profiles } from "./server/db/schema";
 
 type Profile = InferSelectModel<typeof profiles>;
+
 export const config = {
   matcher: [
     "/((?!api/|_next/|_static/|_vercel|icons|images|[\\w-]+\\.\\w+).*)",
+    "/"
   ]
 };
 
 export default async function middleware(req: NextRequest) {
+  console.log("This ran")
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   const hostname = req.headers.get("host");
+  console.log(hostname)
   const reqPathName = req.nextUrl.pathname;
   const url = req.nextUrl;
 
@@ -53,7 +57,9 @@ export default async function middleware(req: NextRequest) {
   //   );
   // }
   let response;
-  
+  if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_BASE_URL){
+    return NextResponse.next();
+  } 
   try {
     const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
       method: "POST"
@@ -64,11 +70,8 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.error(e); 
   }
 
-  if(response.status && response.profile?.domainVerified) {
-    console.log(new URL(`/${hostname}${path}`, req.url))
-    return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
-  }
+ 
+  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 
-
-  return NextResponse.next();
+  // return NextResponse.next();
 }

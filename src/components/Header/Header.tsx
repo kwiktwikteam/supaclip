@@ -5,10 +5,8 @@ import Link from 'next/link'
 import Button from '../ui/Button'
 import content from '~/config/content'
 import { auth } from '~/auth'
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { NextResponse } from 'next/server'
 
+export const dynamic = "force-dynamic"
 
 const Header = async () => {
   const session: {
