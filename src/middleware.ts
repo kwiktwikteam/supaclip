@@ -57,7 +57,7 @@ export default async function middleware(req: NextRequest) {
   //   );
   // }
   let response;
-  console.log("HERE",`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
+  console.log("HERE",`${protocol}://${hostname}/api/profile/domain/${hostname}`)
   if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_BASE_URL){
     console.log("public url")
     return NextResponse.next();
@@ -65,7 +65,7 @@ export default async function middleware(req: NextRequest) {
 
   try {
     console.log("fetch url: ", `${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
-    const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
+    const data = await fetch(`${protocol}://${hostname}/api/profile/domain/${hostname}`, {
       method: "POST"
     });
 
