@@ -64,13 +64,16 @@ export default async function middleware(req: NextRequest) {
   } 
 
   try {
+    console.log("fetch url: ", `${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
     const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
       method: "POST"
     });
+
+    
     // console.log("This ran")
     response = await data.json();
   } catch (error) {
-    console.log("error", error.message)
+    console.log("error", error)
     return NextResponse.next(); 
   }
 
