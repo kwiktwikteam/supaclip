@@ -67,10 +67,10 @@ export default async function middleware(req: NextRequest) {
     // console.log("This ran")
     response = await data.json();
   } catch (error) {
-    return NextResponse.error(e); 
+    return NextResponse.error(); 
   }
 
- 
+  console.log(new URL(`/${hostname}${path}`, req.url))
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 
   // return NextResponse.next();
