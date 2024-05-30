@@ -8,7 +8,7 @@ import Steps from "~/components/Steps/Steps";
 import Subscribe from "~/components/Subscribe/Subscribe";
 
 export const dynamic = 'force-dynamic'
-export const maxDuration = 300;
+export const maxDuration = 59;
 
 export default function HomePage({
   searchParams
