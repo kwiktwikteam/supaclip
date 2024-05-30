@@ -56,11 +56,11 @@ export default async function middleware(req: NextRequest) {
   //   );
   // }
   let response;
+  console.log(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
   if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_BASE_URL){
     return NextResponse.next();
   } 
 
-  console.log(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
   try {
     const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
       method: "POST"
@@ -73,6 +73,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   console.log(new URL(`/${hostname}${path}`, req.url))
+  console.log("Response", response)
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 
   // return NextResponse.next();
