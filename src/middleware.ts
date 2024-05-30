@@ -20,12 +20,12 @@ export default async function middleware(req: NextRequest) {
   // const reqPathName = req.nextUrl.pathname;
   const url = req.nextUrl;
 
-  // const hostedDomain = process.env.NEXT_PUBLIC_BASE_URL.replace(
-  //   /http:\/\/|https:\/\//,
-  //   "",
-  // );
+  const hostedDomain = process.env.NEXT_PUBLIC_BASE_URL.replace(
+    /http:\/\/|https:\/\//,
+    "",
+  );
 
-  // const hostedDomains = [hostedDomain, `www.${hostedDomain}`];
+  const hostedDomains = [hostedDomain, `www.${hostedDomain}`];
   // special case for Vercel preview deployment URLs
   // if (
     
@@ -58,13 +58,13 @@ export default async function middleware(req: NextRequest) {
   // }
   let response;
   console.log("HERE",`${protocol}://${hostname}/api/profile/domain/${hostname}`)
-  if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_BASE_URL){
+  if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_BASE_URL || hostname == `www.${process.env.NEXT_PUBLIC_BASE_URL}`){
     console.log("public url")
     return NextResponse.next();
   } 
 
   try {
-    console.log("fetch url: ", `${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
+    console.log("fetch url: ", `${protocol}$://${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
     const data = await fetch(`${protocol}://${hostname}/api/profile/domain/${hostname}`, {
       method: "POST"
     });
