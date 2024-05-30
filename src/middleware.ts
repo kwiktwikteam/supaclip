@@ -13,6 +13,7 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
+  console.log("runing middleware")
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   const hostname = req.headers.get("host");
   // console.log(hostname)
@@ -56,8 +57,9 @@ export default async function middleware(req: NextRequest) {
   //   );
   // }
   let response;
-  console.log(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
+  console.log("HERE",`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
   if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_BASE_URL){
+    console.log("public url")
     return NextResponse.next();
   } 
 
@@ -68,7 +70,7 @@ export default async function middleware(req: NextRequest) {
     // console.log("This ran")
     response = await data.json();
   } catch (error) {
-    console.log(error.message)
+    console.log("error", error.message)
     return NextResponse.next(); 
   }
 
