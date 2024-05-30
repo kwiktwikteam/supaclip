@@ -13,11 +13,10 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
-  console.log("This ran")
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   const hostname = req.headers.get("host");
-  console.log(hostname)
-  const reqPathName = req.nextUrl.pathname;
+  // console.log(hostname)
+  // const reqPathName = req.nextUrl.pathname;
   const url = req.nextUrl;
 
   // const hostedDomain = process.env.NEXT_PUBLIC_BASE_URL.replace(
@@ -60,6 +59,8 @@ export default async function middleware(req: NextRequest) {
   if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_BASE_URL){
     return NextResponse.next();
   } 
+
+  console.log(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`)
   try {
     const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/domain/${hostname}`, {
       method: "POST"
@@ -67,7 +68,7 @@ export default async function middleware(req: NextRequest) {
     // console.log("This ran")
     response = await data.json();
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
     return NextResponse.next(); 
   }
 
