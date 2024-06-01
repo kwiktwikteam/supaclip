@@ -13,7 +13,7 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
-  console.log("runing middleware")
+  // console.log("runing middleware")
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   const hostname = req.headers.get("host");
   // console.log(hostname)
@@ -57,9 +57,9 @@ export default async function middleware(req: NextRequest) {
   //   );
   // }
   let response;
-  console.log("HERE",`${protocol}://${hostname}/api/profile/domain/${hostname}`)
+  // console.log("HERE",`${protocol}://${hostname}/api/profile/domain/${hostname}`)
   if(hostname == `localhost:3000` || hostname == process.env.NEXT_PUBLIC_ROOT_DOMAIN || hostname == `www.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`){
-    console.log("public url")
+    // console.log("public url")
     return NextResponse.next();
   } 
 
@@ -77,8 +77,8 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next(); 
   }
 
-  console.log(new URL(`/${hostname}${path}`, req.url))
-  console.log("Response", response)
+  // console.log(new URL(`/${hostname}${path}`, req.url))
+  // console.log("Response", response)
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 
   // return NextResponse.next();

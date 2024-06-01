@@ -49,7 +49,7 @@ export async function GET(request: Request, { params }: { params: { domain: stri
         .set({ domain: params.domain }) 
         .where(eq(profiles.userId, profile.userId))
         .catch((error) => {
-            console.log("error updating profile ", error)
+            // console.log("error updating profile ", error)
             return Response.redirect(`/c/${profile.userId}/profile`)
         })
         
@@ -59,7 +59,7 @@ export async function GET(request: Request, { params }: { params: { domain: stri
             .where(eq(profiles.userId, profile.userId))
         }
         const res = await verifyDomain(params.domain)
-        console.log(res)
+        // console.log(res)
         return Response.json({
             status: true,
             misconfigured: configResposne.misconfigured,
@@ -84,7 +84,7 @@ export async function POST(request: Request, { params }: { params: { domain: str
     .from(profiles)
     .where(eq(profiles.domain, params.domain))
     
-    console.log(allProfiles)
+    // console.log(allProfiles)
     let response;
     if(!allProfiles[0]) {
       response ={

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const ORDER_CREATED = "order_created";
 const ORDER_REFUNDED = "order_refunded";
 const SUBSCRIPTION_CREATED = "subscription_created";
@@ -16,8 +17,11 @@ const LICENSE_KEY_CREATED = "license_key_created";
 const LICENSE_KEY_UPDATED = "license_key_updated";
 
 import crypto from "crypto";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { db } from "~/server/db";
+import { profiles, users } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
   const headersList = headers();
@@ -42,16 +46,26 @@ export async function POST(req: NextRequest) {
   const body = JSON.parse(text);
 
   const {
-    meta: { event_name, test_mode },
+    meta: { id, event_name, test_mode },
     data: {
-      attributes: { user_email, product_id },
+      attributes: { user_email, status },
     },
   } = body;
 
-  console.log(event_name, test_mode, user_email, product_id)
+  console.log(id, event_name, test_mode, user_email, status)
 
   switch (event_name) {
     case ORDER_CREATED:
+      if(status == "paid"){ 
+        //TODO: update the user to premium for that email in the db
+        const user = await db.select().from(users).where(eq(users.email, user_email as string)) 
+
+        if(!user[0]){ 
+          await fetch(`https://docs.google.com/forms/d/e/1FAIpQLSf4PUuozYvL63uf2k0Cb9NmMKSBrtJ22c1cln2jpB6XMgs_CQ/formResponse?entry.1277067328=${user_email}&entry.1509663754=${id}`)
+          return NextResponse.json({ message: "user not found" }, { status: 404 });
+        }
+        await db.update(profiles).set({ premiumUser: true }).where(eq(profiles.userId, user[0].id))
+      }
       return NextResponse.json({ message: "order created" });
     case ORDER_REFUNDED:
       return NextResponse.json({ message: "order refunded" });

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
@@ -48,35 +49,49 @@ const FormProfile = ({
   const onFormSubmit = async () => {
     setformSubmitted(false)
     setloading(true)
-    if(!about && about != userProfile.about) {
+    // console.log("about", about != userProfile.about, !about);
+    if(about && about != userProfile.about) {
       // update about
       await updateProfile(about)
-      
+      toast({
+        title: "About updated successfully ✅",
+      }) 
     }
       // check valid domain
-    if(domain != "" && domain.includes(".") && !domain.includes("supaclip.pro")){ 
-      console.log("here")
-      const res = await fetch(`/api/profile/domain/${domain}`) 
+    if(!userProfile.premiumUser) {
+          setloading(false);
+          setformSubmitted(true);
+      return;
+    }
+    if (
+      userProfile.premiumUser &&
+      domain != userProfile.domain &&
+      domain.includes(".") &&
+      !domain.includes("supaclip.pro")
+    ) {
+      // console.log("here");
+      const res = await fetch(`/api/profile/domain/${domain}`);
 
-      const data = await res.json()
+      const data = await res.json();
 
-      setresponse(data)
-      setloading(false)
-      
+      setresponse(data);
+      setloading(false);
 
       toast({
         title: data.message,
-      })
-      console.log(res, data)
+      });
+      // console.log(res, data);
     } else {
       toast({
         title: "Please enter a valid domain",
-      })
-      setdomain("")
+      });
+      setdomain("");
     }
 
     setloading(false);
     setformSubmitted(true);
+
+    // window.location.reload()
 }
 
   
@@ -98,7 +113,7 @@ const FormProfile = ({
           className="rounded-lg border bg-white/20 p-2 text-sm"
         />
       </div>
-      {!userProfile.premiumUser ? (
+      {userProfile.premiumUser ? (
         <div className="form-group flex flex-col gap-1">
           <label>Custom Domain</label>
           <input
@@ -115,7 +130,7 @@ const FormProfile = ({
       ) : (
         <div className="my-8 flex items-center justify-center">
           <Link
-            href="/"
+            href="https://shop.boilercode.app/buy/2cefb9ea-d2bc-4f90-affa-938cf0508432"
             className="sm:text-md w-full rounded-xl bg-white/90 p-4 text-center text-xs font-semibold text-black"
           >
             <span>Upgrade to Premium to add custom domain ⚡ ️</span>

@@ -142,7 +142,7 @@ export const domainConfigValuesAll = async(domain: string, add: boolean) => {
   }
 
   const configResponse = await getConfigResponse(domain)
-  console.log(configResponse)
+  // console.log(configResponse)
         const misconfigured = {
             status: configResponse.misconfigured,
             type: verifyDomainValues[0]?.Type, 

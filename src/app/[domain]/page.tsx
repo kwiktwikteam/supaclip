@@ -35,12 +35,12 @@ const page = async ({
       profile?: Profile | undefined;
     } = await data.json();
 
-    console.log(response)
+    // console.log(response)
     if(response.status){
       creatorId = response.profile?.userId ?? "";
     }
    } catch (error) {
-     console.log(creatorId)
+    //  console.log(creatorId)
   }
   return (
     <div className="grid h-screen w-screen">

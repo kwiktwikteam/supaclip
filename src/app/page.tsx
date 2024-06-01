@@ -21,7 +21,7 @@ export default function HomePage({
   //   // continue;
   // }
 
-  console.log(searchParams)
+  // console.log(searchParams)
   return (
       <main className="space-y-18 relative min-h-screen">
         <Header />

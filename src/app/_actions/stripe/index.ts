@@ -57,7 +57,7 @@ export async function createCheckoutSession(
     });
 
 
-  console.log("Debugging", checkoutSession)
+  // console.log("Debugging", checkoutSession)
 
   return {
     client_secret: checkoutSession.client_secret,

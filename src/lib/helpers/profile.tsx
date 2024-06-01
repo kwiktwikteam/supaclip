@@ -42,8 +42,8 @@ export const updateProfile = async ( about: string) => {
     
     const updatedProfile = await db.update(profiles)
     .set({ about: about })
-    .where(eq(profiles.userId, profile?.userId ?? session?.user?.id))
-    .returning()
+    .where(eq(profiles.id, profile?.id!))
+    
     return updatedProfile;
 }
 
