@@ -81,7 +81,11 @@ export default async function Page({
                 Premium User
               </p>
             ) : (
-              <Link href="https://shop.boilercode.app/buy/2cefb9ea-d2bc-4f90-affa-938cf0508432">
+              <Link
+                passHref
+                legacyBehavior
+                href="https://shop.boilercode.app/buy/2cefb9ea-d2bc-4f90-affa-938cf0508432"
+              >
                 <p className="w-responsive mx-auto my-4 rounded-full bg-white px-2 py-2 text-center font-medium uppercase text-black">
                   Upgrade to Premium
                 </p>

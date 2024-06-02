@@ -66,13 +66,15 @@ const VideoCard = ({
       className="relative  flex w-full cursor-pointer flex-col justify-center  gap-2 rounded-xl bg-gray-200 bg-transparent duration-300 hover:scale-105"
     >
       {video.thumbnail ? (
-        <Image
-          src={video.thumbnail}
-          alt={video.title ?? "na"}
-          width={240}
-          height={200}
-          className={`w-full rounded-t-xl object-cover ${hideDetails ? "h-[130px] w-[240px]" : ""}`}
-        />
+        <div className={`relative rounded-xl bg-gray-500  ${hideDetails ? "h-[130px] w-[240px]" : "w-[240px] h-[200px]"}`}>
+          <Image
+            src={video.thumbnail}
+            alt={video.title ?? "na"}
+            width={240}
+            height={200}
+            className={`absolute z-10 top-0 left-0 right-0 bottom-0 rounded-t-xl object-cover`}
+          />
+        </div>
       ) : (
         <Image
           src={blankImageUrl}

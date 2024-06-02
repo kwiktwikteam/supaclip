@@ -24,8 +24,8 @@ export async function GET(request: Request, { params }: { params: { domain: stri
         }
 
         let message = ""
-        
-        if (profile.domain == params.domain) {
+        let otherProfileWithDomain = await db.select().from(profiles).where(eq(profiles.domain, params.domain)) 
+        if (profile.domain == params.domain || !otherProfileWithDomain[0]) {
             message = "Domain already exists!"
         }
         else {
