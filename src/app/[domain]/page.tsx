@@ -8,7 +8,7 @@ import Button from "~/components/ui/Button";
 import { profiles } from "~/server/db/schema";
 type Profile = InferSelectModel<typeof profiles>;
 
-export const maxDuration = 59;
+// export const maxDuration = 59;
 
 
 const page = async ({ 
