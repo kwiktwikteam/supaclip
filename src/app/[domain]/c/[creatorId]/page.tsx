@@ -12,6 +12,8 @@ import { getUser } from "~/lib/helpers/transcript";
 import { db } from "~/server/db";
 import { transcriptions } from "~/server/db/schema";
 
+export const maxDuration = 59;
+
 export default async function Page({
   params,
 }: {

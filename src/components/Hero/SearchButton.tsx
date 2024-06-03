@@ -62,19 +62,21 @@ const SearchButton = () => {
     <form
       action={handleSubmit}
       className="flex  flex-row items-center justify-center duration-300 sm:gap-8"
+      style={{
+        zIndex: 50,
+      }}
     >
       <input
         type="text"
         value={url}
         onChange={(e) => seturl(e.target.value)}
         placeholder="Enter a youtube video url "
-        className="rounded-full bg-white/50 px-4 py-2 text-center text-white shadow-md placeholder:text-white/70  focus:outline-none active:outline-none md:w-[425px]"
+        className="z-50 rounded-full bg-white/50 px-4 py-2 text-center text-white shadow-md placeholder:text-white/70  focus:outline-none active:outline-none md:w-[425px]"
       ></input>
 
-      <Search
-        className={`${!url && "hidden"} z-50 cursor-pointer`}
-        type="submit"
-      />
+      <button type="submit" className="z-50 cursor-pointer ">
+        <Search className={`${!url && "hidden"} cursor-pointer`} />
+      </button>
     </form>
   );
 }

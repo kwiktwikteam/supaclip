@@ -124,9 +124,9 @@ const Pricing = () => {
               </ul>
             </div>
             <Link
+              href="https://shop.boilercode.app/buy/2cefb9ea-d2bc-4f90-affa-938cf0508432"
               passHref
               legacyBehavior
-              href="https://shop.boilercode.app/buy/2cefb9ea-d2bc-4f90-affa-938cf0508432"
             >
               <Button variant="dark" className="w-full">
                 PREMIUM $20
