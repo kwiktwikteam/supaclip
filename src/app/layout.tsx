@@ -26,14 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* <CSPostHogProvider> */}
-      <CSPostHogProvider>
+      {/* <CSPostHogProvider> */}
         <SessionProvider>
           <body className={`font-sans ${inter.variable} h-full w-full`}>
             {children}
             <Toaster />
           </body>
         </SessionProvider>
-      </CSPostHogProvider>
+      {/* </CSPostHogProvider> */}
       {/* </CSPostHogProvider> */}
     </html>
   );
