@@ -14,17 +14,37 @@ const prompt =
 export const textTotext =async (inp: string, para: string) =>{
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
   let text, result, response;
-  if(para) {
-    const finalPrompt = prompt + para.slice(0,2500) + "Based on only this answer the following user input: " + inp;
-    // console.log("Para", para)
-    result = await model.generateContent(finalPrompt);
-    response =result.response;
-    text = response.text();
-  } else {
-    result = await model.generateContent("Analyze the question and give a simplified ans. The question is: " + inp);
-    response =result.response;
-    text = result.response.text();
-  }
+  try {
+    if (para) {
+      const finalPrompt =
+        prompt +
+        para.slice(0, 2500) +
+        "Based on only this answer the following user input: " +
+        inp;
+      // console.log("Para", para)
+      result = await model.generateContent(finalPrompt);
+      response = result.response;
+      text = response.text();
+    } else {
+      result = await model.generateContent(
+        "Analyze the question and give a simplified ans. The question is: " +
+          inp,
+      );
+      response = result.response;
+      text = result.response.text();
+    }
+  } catch (error) {
+    try {
+      result = await model.generateContent(
+        "Analyze the question and give a simplified ans. The question is: " +
+          inp,
+      );
+      response = result.response;
+      text = result.response.text(); 
+    } catch (error) {
+      text = "Sorry, we are facing an error at the moment. Please try again later."
+    }
+  } 
 //   setresponse(text);
   return text
 }
