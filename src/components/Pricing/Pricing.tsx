@@ -125,7 +125,7 @@ const Pricing = () => {
             </div>
             <Link href={values.LEMON_SQUEEZY_URL} target='_blank' >
               <Button variant="dark" className="w-full">
-                PREMIUM $20
+                PREMIUM ${values.LEMON_SQUEEZY_PRICE}
               </Button>
             </Link>
 
