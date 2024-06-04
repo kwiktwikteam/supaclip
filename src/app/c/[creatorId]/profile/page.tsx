@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import verifyDomainValues from "~/config/domain.vercel";
+import values from "~/config";
 export default async function Page({
   params,
 }: {
@@ -83,7 +84,7 @@ export default async function Page({
             ) : (
               <Link
                 target="_blank"
-                href="https://shop.boilercode.app/buy/2cefb9ea-d2bc-4f90-affa-938cf0508432"
+                href={values.LEMON_SQUEEZY_URL}
                 className="cursor-pointer"
               >
                 <p className="w-responsive mx-auto my-4 rounded-full bg-white px-2 py-2 text-center font-medium uppercase text-black">

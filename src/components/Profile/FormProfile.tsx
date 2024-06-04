@@ -21,6 +21,7 @@ import {
 } from "~/components/ui/table";
 import { updateProfile } from "~/lib/helpers/profile";
 import verifyDomainValues from "~/config/domain.vercel";
+import values from "~/config";
 
 type Profile = InferSelectModel<typeof profiles>;
 
@@ -130,7 +131,7 @@ const FormProfile = ({
       ) : (
         <div className="my-8 flex items-center justify-center">
           <Link
-            href="https://shop.boilercode.app/buy/2cefb9ea-d2bc-4f90-affa-938cf0508432"
+            href={values.LEMON_SQUEEZY_URL}
             className="sm:text-md cursor-pointer w-full rounded-xl bg-white/90 p-4 text-center text-xs font-semibold text-black"
             target="_blank"
           >
