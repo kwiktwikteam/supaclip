@@ -7,6 +7,9 @@ import Pricing from "~/components/Pricing/Pricing";
 import Steps from "~/components/Steps/Steps";
 import Subscribe from "~/components/Subscribe/Subscribe";
 
+// export const dynamic = 'force-dynamic'
+// export const maxDuration = 59;
+
 export default function HomePage({
   searchParams
 }: {
@@ -18,7 +21,7 @@ export default function HomePage({
   //   // continue;
   // }
 
-  console.log(searchParams)
+  // console.log(searchParams)
   return (
       <main className="space-y-18 relative min-h-screen">
         <Header />

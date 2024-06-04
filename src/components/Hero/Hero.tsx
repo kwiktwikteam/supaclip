@@ -1,13 +1,15 @@
 import React from "react";
 import Title, { SubTitle } from "../ui/Title";
 import content from "~/config/content";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Button from "../ui/Button";
 import { ArrowRight } from "lucide-react";
 import SearchButton from "./SearchButton";
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
 import { desc } from "drizzle-orm";
+
+export const dynamic = "force-dynamic";
 
 const Hero = async () => {
   const { hero } = content.home;
@@ -22,17 +24,17 @@ const Hero = async () => {
       <Image
         src={"/images/hero/bg.png"}
         alt="hero"
-        fill
+        layout="fill" 
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
 
       {/* ICONS */}
-      <Image
+      {/* <Image
         src={"/icons/decorations/icon-1.svg"}
         alt="icon"
         width={60}
         height={60}
-        className="absolute z-10 rounded-xl max-xl:hidden lg:left-24"
+        className="block absolute z-10 rounded-xl max-xl:hidden lg:left-24"
       />
       <Image
         src={"/icons/decorations/icon-2.svg"}
@@ -54,7 +56,7 @@ const Hero = async () => {
         width={60}
         height={60}
         className="2xl:opacity-1 absolute z-10 rounded-xl max-xl:hidden lg:right-80 lg:top-80 lg:opacity-50"
-      />
+      /> */}
 
       <Title variant="xl" className="z-20">
         {hero.title[0]}
@@ -74,13 +76,13 @@ const Hero = async () => {
         <div className="space-y-20">
           <div className="grid place-content-center ">
             <div className="flex-col-center-center relative gap-4">
-              <Image
+              {/* <Image
                 src={"/icons/hero/arrow.svg"}
                 alt="arrow"
                 width={24}
                 height={30}
                 className="absolute left-2 top-0 max-lg:hidden"
-              />
+              /> */}
               {/* <Image
                 src={"/images/hero/users.png"}
                 alt="users"

@@ -1,6 +1,6 @@
 import { desc, eq } from "drizzle-orm";
 import { HomeIcon, Video } from "lucide-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CgAdd } from "react-icons/cg";
@@ -63,7 +63,7 @@ export default async function Page({
 
           {/* button */}
           <div className="flex items-center gap-4 max-md:hidden ">
-            {session?.userId  ? (
+            {session?.userId ? (
               <Link href="/generate">
                 <Button className="space-x-2 bg-white text-black">
                   <CgAdd className="text-xl" />
@@ -71,6 +71,13 @@ export default async function Page({
                 </Button>
               </Link>
             ) : null}
+            {session?.userId && (
+              <Link href={`/c/${session?.user?.id}/profile`}>
+                <div className="10 rounded-full bg-white p-2 text-black">
+                  <MdAccountCircle className="text-2xl" />
+                </div>
+              </Link>
+            )}
             <Link href="/">
               <div className="10 rounded-full bg-white p-2 text-black">
                 <HomeIcon className="text-xl" />
@@ -80,8 +87,8 @@ export default async function Page({
           </div>
         </div>
 
-        <div className="fixed md:hidden bottom-0 left-0 right-0 z-20  py-4">
-          <div className="mx-auto flex w-[90%] border rounded-full items-center justify-between bg-black py-1 px-3">
+        <div className="fixed bottom-0 left-0 right-0 z-20 py-4  md:hidden">
+          <div className="mx-auto flex w-[90%] items-center justify-between rounded-full border bg-black px-3 py-1">
             <Link href="/">
               <HomeIcon className="h-8 w-8 text-white" />
             </Link>
@@ -91,7 +98,10 @@ export default async function Page({
               </Link>
             ) : null} */}
             {session?.userId ? (
-              <Link href="/generate" className="h-full self-stretch bg-white text-black rounded-full p-2">
+              <Link
+                href="/generate"
+                className="h-full self-stretch rounded-full bg-white p-2 text-black"
+              >
                 <Video className="h-10 w-10  rounded-full " />
               </Link>
             ) : null}
@@ -103,7 +113,7 @@ export default async function Page({
         <VidGallery
           videos={allVids}
           creator={params.creatorId}
-          className="xl:grid-cols-4 pb-24"
+          className="pb-24 xl:grid-cols-4"
         />
       </div>
     </main>

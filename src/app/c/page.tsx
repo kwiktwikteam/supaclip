@@ -1,24 +1,14 @@
-"use client"
+import { redirect } from "next/navigation";
+import { auth } from "~/auth";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useToast } from "~/components/ui/use-toast";
+const Page = async () => {
+    const session = await auth();
 
-const Page = () => {
+    if(!session) {
+        return redirect("/api/auth/signin")
+    }
 
-    const { toast } = useToast();
-    const router = useRouter()
-
-    useEffect(() => {
-        toast({
-            title: "Go to specific creator",
-            description: "You can go to a specific creator by going to /c/creatorId. Redirecting you to home page.",
-        })
-
-        return  router.push("/")
-    }, [])
-    
-    
+    redirect(`generate`)
 }
 
 export default Page;

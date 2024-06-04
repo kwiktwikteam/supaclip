@@ -1,7 +1,7 @@
 import React, { use } from 'react'
 import Title, { SubTitle } from '../ui/Title'
 import content from '~/config/content';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import EarlyAdopterCard from './EarlyAdopterCard';
 
 const EarlyAdopters = () => {
@@ -17,13 +17,13 @@ const EarlyAdopters = () => {
             <div className="text-purple relative inline">
               <span>
                 {usecases.title[1]}
-                <Image
+                {/* <Image
                   src="/icons/hero/wigly.svg"
                   alt="wigly"
                   width={118}
                   height={5}
                   className="absolute -bottom-2 left-0 right-0 w-full"
-                />
+                /> */}
               </span>
             </div>{" "}
             {usecases.title[2]}

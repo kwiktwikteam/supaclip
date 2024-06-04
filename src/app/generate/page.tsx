@@ -2,13 +2,13 @@
 
 import React, {useState, useEffect } from "react";
 import Button from "~/components/ui/Button";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useToast } from "~/components/ui/use-toast";
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { fetchMetaData, fetchVideoId } from "~/lib/helpers/transcript";
-import VidGallery from "~/components/Gallery/VidGallery";
+// import VidGallery from "~/components/Gallery/VidGallery";
 import { MdPerson } from "react-icons/md";
 import { useSession } from "next-auth/react";
 
@@ -79,14 +79,14 @@ const Page = () => {
         <Image
           src={"/bg.png"}
           alt="hero"
-          fill
+          layout="fill"
           priority
           className="absolute z-10 h-full w-full opacity-30 "
         />
         <Image
           src={"/images/hero/bg.png"}
           alt="hero"
-          fill
+          layout="fill"
           className="absolute z-10 h-full w-full opacity-50"
         />
         {/* <VidGallery
@@ -100,14 +100,17 @@ const Page = () => {
           </Link>
           {session?.user && (
             <Link
-              href={"/c/" + session.userId}
+              href={"/c/" + session?.user.id}
               className="rounded-full border-2 p-2"
             >
               <MdPerson className="h-6 w-6" />
             </Link>
           )}
         </div>
-        <form action={getVideoData} className="flex-col-center-center z-10 gap-5 max-md:w-screen">
+        <form
+          action={getVideoData}
+          className="flex-col-center-center z-10 gap-5 max-md:w-screen"
+        >
           <input
             type="text"
             placeholder="YouTube Video Url or ID"
@@ -120,7 +123,7 @@ const Page = () => {
 
           <Button
             disabled={vidId ? true : false}
-            type="submit" 
+            type="submit"
             className="bg-white"
           >
             Get Video
@@ -179,7 +182,7 @@ const Page = () => {
                     onClick={() => {
                       window.location.pathname = "/generate/" + vidId;
                     }}
-                    className="bg-black text-white w-full"
+                    className="w-full bg-black text-white"
                   >
                     Generate
                   </Button>

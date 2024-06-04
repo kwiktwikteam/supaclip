@@ -6,13 +6,15 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
+  type?: "button" | "submit";
 }
 
 
-const Button = ({ children, variant = "light", onClick, className, disabled }: ButtonProps) => {
+const Button = ({ children, variant = "light", onClick, className, disabled, type="button" }: ButtonProps) => {
   return (
     <button
       disabled={disabled}
+      type={type}
       onClick={onClick}
       className={`flex items-center justify-center font-semibold ${
         variant == "dark"

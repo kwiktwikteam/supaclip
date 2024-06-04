@@ -1,7 +1,6 @@
-import { relations, sql } from "drizzle-orm";
+import {relations, sql } from "drizzle-orm";
 import {
   decimal,
-  index,
   integer,
   pgTableCreator,
   primaryKey,
@@ -10,7 +9,8 @@ import {
   timestamp,
   varchar,
   pgTable,
-  uniqueIndex
+  uniqueIndex,
+  boolean
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 // import type { AdapterAccountType } from '@auth/core/adapters'
@@ -33,6 +33,13 @@ export const users = pgTable("user", {
   // createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`).notNull(),
   // updatedAt: timestamp("updatedAt"),
 })
+
+const usersRelations = relations(users, ({ many , one }) => ({
+  sessions: many(sessions),
+  profiles: one(profiles),
+  transcriptions: many(transcriptions),
+}));
+
  
 export const accounts = pgTable(
 "account",
@@ -76,8 +83,38 @@ export const verificationTokens = pgTable(
  })
 )
 
+// USER PROFILE 
+export const profiles = createTable(
+  "profiles", {
+    id: serial("id").primaryKey(),
+    userId: varchar("userId", { length: 255 }).notNull().references(() => users.id),
+    about: text("about"),
 
+    // socials
+    youtubeLink: text("youtubeLink"),
+    twitterLink: text("twitterLink"),
+    linkedinLink: text("linkedinLink"),
+    facebookLink: text("facebookLink"),
+    instagramLink: text("instagramLink"),
 
+    domain: text("domain").unique(),
+    domainVerified: boolean("domainVerified").default(false),
+    premiumUser: boolean("premiumUser").default(false),
+    paymentId: text("paymentId"),
+
+    createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`).notNull(),
+    updatedAt: timestamp("updatedAt"),
+  },  (t) => ({
+    profileDomainUnique: uniqueIndex().on(t.domain, t.userId)
+  }) 
+)
+
+const profilesRelations = relations(profiles, ({ one }) => ({
+  user: one(users, {
+    fields: [profiles.userId],
+    references: [users.id],
+  }),
+}));
 
 
 export const transcriptions = createTable(
@@ -99,8 +136,12 @@ export const transcriptions = createTable(
   }) 
 )
 
-export const transcriptionsRelations = relations(transcriptions, ({ many }) => ({
-  transcriptRows: many(transcriptRows)
+export const transcriptionsRelations = relations(transcriptions, ({ many, one }) => ({
+  transcriptRows: many(transcriptRows),
+  user: one(users, {
+    fields: [transcriptions.userId],
+    references: [users.id],
+  }),
 }));
 
 export const transcriptRows= createTable(

@@ -33,6 +33,9 @@ export const env = createEnv({
     LOOPS_EMAIL_KEY: z.string(),
     GEMINI_API_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
+    PROJECT_ID_VERCEL: z.string(),
+    VERCEL_TEAM_ID: z.string(),
+    AUTH_BEARER_TOKEN: z.string()
   },
 
   /**
@@ -62,6 +65,9 @@ export const env = createEnv({
     GEMINI_API_KEY: process.env.GEMINI_API_KEY,
     LOOPS_EMAIL_KEY: process.env.LOOPS_EMAIL_KEY,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    PROJECT_ID_VERCEL: process.env.PROJECT_ID_VERCEL,
+    VERCEL_TEAM_ID: process.env.VERCEL_TEAM_ID,
+    AUTH_BEARER_TOKEN: process.env.AUTH_BEARER_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
