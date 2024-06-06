@@ -23,6 +23,9 @@ import { updateProfile } from "~/lib/helpers/profile";
 import verifyDomainValues from "~/config/domain.vercel";
 import values from "~/config";
 
+
+export const dynamic = 'force-dynamic'
+
 type Profile = InferSelectModel<typeof profiles>;
 
 const FormProfile = ({
@@ -66,7 +69,6 @@ const FormProfile = ({
     }
     if (
       userProfile.premiumUser &&
-      domain != userProfile.domain &&
       domain.includes(".") &&
       !domain.includes("supaclip.pro")
     ) {
