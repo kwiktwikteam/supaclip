@@ -1,10 +1,9 @@
 import { desc, eq } from "drizzle-orm";
-import { HomeIcon, Video } from "lucide-react";
+import { HomeIcon, Settings, Video } from "lucide-react";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CgAdd } from "react-icons/cg";
-import { MdAccountCircle } from "react-icons/md";
 import { auth } from "~/auth";
 import VidGallery from "~/components/Gallery/VidGallery";
 import Button from "~/components/ui/Button";
@@ -52,7 +51,7 @@ export default async function Page({
                   className="h-14 w-14 rounded-full"
                 />
               ) : (
-                <MdAccountCircle className="text-6xl text-white" />
+                <Settings className="text-6xl text-white" />
               )}
             </div>
             <div className="text-white">
@@ -74,7 +73,7 @@ export default async function Page({
             {session?.userId && (
               <Link href={`/c/${session?.user?.id}/profile`}>
                 <div className="10 rounded-full bg-white p-2 text-black">
-                  <MdAccountCircle className="text-2xl" />
+                  <Settings className="text-2xl" />
                 </div>
               </Link>
             )}
@@ -106,7 +105,7 @@ export default async function Page({
               </Link>
             ) : null}
             <Link href={`/c/${session?.userId}/profile`}>
-              <MdAccountCircle className="h-10 w-10 text-white" />
+              <Settings className="h-10 w-10 text-white" />
             </Link>
           </div>
         </div>

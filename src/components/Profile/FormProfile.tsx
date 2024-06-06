@@ -73,6 +73,19 @@ const FormProfile = ({
       !domain.includes("supaclip.pro")
     ) {
       // console.log("here");
+
+      // write regex to change a url to a valid domain
+      function getApexDomain(url : string) {
+        const regex = /^(?:https?:\/\/)?(?:www\.)?([^\/:?#]+)(?:[\/:?#]|$)/i;
+        const match = url.match(regex);
+        return match ? match[1] : url;
+      }
+
+      // Example usage
+      // const url = "https://subdomain.example.co.uk/path?query=param#hash";
+      const apexDomain = getApexDomain(domain);
+
+      setdomain(apexDomain ?? "");
       const res = await fetch(`/api/profile/domain/${domain}`);
 
       const data = await res.json();

@@ -4,7 +4,6 @@ import "~/styles/globals.css";
 import { Inter } from "next/font/google";
 import { Toaster } from "~/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
-import { CSPostHogProvider } from "./providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({
