@@ -72,7 +72,7 @@ const VideoCard = ({
             alt={video.title ?? "na"}
             width={240}
             height={200}
-            className={`absolute z-10 top-0 left-0 right-0 bottom-0 rounded-t-xl object-cover`}
+            className={`absolute z-10 top-0 left-0 right-0 bottom-0 rounded-xl object-cover`}
           />
         </div>
       ) : (
