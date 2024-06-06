@@ -49,7 +49,7 @@ const content = {
             "title": ["Instantly turn any video into", "knowledge base."],
             "subtitle": "Summarize, transcripts, timestamps & AI assistant for your videos are just a click away",
             "button": "Get Started",
-            "more": "50+ users are enjoying this for $0"
+            // "more": "50+ users are enjoying this for $0"
         },
         "usecases": {
             "title": ["Some", "Awesome", "Usecases"],

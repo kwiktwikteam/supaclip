@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import { Toaster } from "~/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
 import { CSPostHogProvider } from "./providers";
-
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,14 +27,16 @@ export default function RootLayout({
     <html lang="en">
       {/* <CSPostHogProvider> */}
       {/* <CSPostHogProvider> */}
-        <SessionProvider>
-          <body className={`font-sans ${inter.variable} h-full w-full`}>
-            {children}
-            <Toaster />
-          </body>
-        </SessionProvider>
+      <SessionProvider>
+        <body className={`font-sans ${inter.variable} h-full w-full`}>
+          {children}
+          <Toaster />
+        </body>
+      </SessionProvider>
       {/* </CSPostHogProvider> */}
       {/* </CSPostHogProvider> */}
+
+      <GoogleAnalytics gaId="G-7M8CL2TPP6" />
     </html>
   );
 }
