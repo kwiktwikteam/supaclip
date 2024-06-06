@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 import SearchButton from "./SearchButton";
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
-import { desc } from "drizzle-orm";
+import { count, desc } from "drizzle-orm";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +18,8 @@ const Hero = async () => {
     name: users.name
   }).from(users).limit(6).orderBy(desc(users.id));
 
-
+  const num = await db.select({ count: count()}).from(users)
+  
   return (
     <section className="relative min-h-screen space-y-5 pt-40 text-white">
       <Image
@@ -92,7 +93,7 @@ const Hero = async () => {
               /> */}
               <UserCards userImages={userImages} />
 
-              <p>{hero.more}</p>
+              <p>{num[0]?.count}+ users are enjoying this for $0</p>
             </div>
           </div>
           <div className="w-responsive shadow-gray shadow-t-xl min-h-[70vh] rounded-xl bg-white">
