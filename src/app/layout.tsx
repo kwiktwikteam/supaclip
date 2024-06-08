@@ -35,7 +35,7 @@ export default function RootLayout({
       {/* </CSPostHogProvider> */}
       {/* </CSPostHogProvider> */}
 
-      <GoogleAnalytics gaId="G-7M8CL2TPP6" />
+      <GoogleAnalytics gaId="G-E6J1E0YXT3" />
     </html>
   );
 }
