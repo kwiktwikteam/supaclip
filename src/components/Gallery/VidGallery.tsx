@@ -65,25 +65,28 @@ const VideoCard = ({
       href={`/c/${creator}/vid/${video.videoId}`}
       className="relative  flex w-full cursor-pointer flex-col justify-center  gap-2 rounded-xl bg-gray-200 bg-transparent duration-300 hover:scale-105"
     >
-      {video.thumbnail ? (
-        <div className={`relative rounded-xl bg-gray-500  ${hideDetails ? "h-[130px] w-[240px]" : "w-[240px] h-[200px]"}`}>
+      <div className="relative">
+        {video.thumbnail ? (
+          <div
+            className={` rounded-xl bg-gray-500/30  ${hideDetails ? "min-h-[130px] min-w-[240px]" : "min-h-[200px] min-w-[240px]"}`}
+          >
+            <Image
+              src={video.thumbnail}
+              alt={video.title ?? "na"}
+              layout="fill"
+              className={`rounded-xl object-cover`}
+            />
+          </div>
+        ) : (
           <Image
-            src={video.thumbnail}
+            src={blankImageUrl}
             alt={video.title ?? "na"}
             width={240}
             height={200}
-            className={`absolute z-10 top-0 left-0 right-0 bottom-0 rounded-xl object-cover`}
+            className={`w-full rounded-t-xl ${hideDetails ? "h-[130px] w-[240px]" : ""}`}
           />
-        </div>
-      ) : (
-        <Image
-          src={blankImageUrl}
-          alt={video.title ?? "na"}
-          width={240}
-          height={200}
-          className={`w-full rounded-t-xl ${hideDetails ? "h-[130px] w-[240px]" : ""}`}
-        />
-      )}
+        )}
+      </div>
       <div className={`text-white ${hideDetails ? "" : ""}`}>
         <h3 className="flex max-w-[250px] flex-wrap font-bold">
           {video.title?.toString().slice(0, 50) ?? "Video Title"}
