@@ -57,10 +57,10 @@ const Pricing = () => {
     return (
       <div
         id="pricing"
-        className="w-responsive flex flex-col items-center justify-center  gap-8 rounded-xl *:w-1/2 *:rounded-lg *:border-2 *:px-6 *:py-8 md:flex-row *:md:flex-row *:md:items-center "
+        className="w-responsive flex flex-col   gap-8 rounded-xl *:md:w-1/2 *:rounded-lg *:border-2 *:px-6 *:py-8 md:flex-row *:md:flex-row *:md:items-center "
       >
         {/* features */}
-        <div className="flex flex-nowrap items-center  justify-center">
+        <div className="">
           <div className="flex w-full flex-col gap-8 md:h-full">
             <div className="flex-1 space-y-4">
               <div className="space-y-1">

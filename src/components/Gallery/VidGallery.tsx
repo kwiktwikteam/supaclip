@@ -68,7 +68,7 @@ const VideoCard = ({
       <div className="relative">
         {video.thumbnail ? (
           <div
-            className={` rounded-xl bg-gray-500/30  ${hideDetails ? "min-h-[130px] min-w-[240px]" : "min-h-[200px] min-w-[240px]"}`}
+            className={`rounded-xl bg-gray-500/30  ${hideDetails ? "min-h-[130px] min-w-[240px]" : "min-h-[200px] min-w-[240px]"}`}
           >
             <Image
               src={video.thumbnail}
