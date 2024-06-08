@@ -84,7 +84,10 @@ const Subscribe = () => {
         <SubTitle subTitleClass="lg:w-1/2">{subscribe.subtitle}</SubTitle>
 
         {/* form */}
-        <div className="form-group lg:flex-center mx-auto gap-4 max-lg:space-y-3 lg:w-1/2">
+        <form
+          onSubmit={handleSubmit}
+          className="form-group lg:flex-center mx-auto gap-4 max-lg:space-y-3 lg:w-1/2"
+        >
           <input
             type="email"
             placeholder="Enter your email"
@@ -93,12 +96,12 @@ const Subscribe = () => {
             className="rounded-xl border border-[#dcdcdc] p-3 px-5 max-lg:mx-auto max-lg:w-3/4 lg:w-[285px]"
           />
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="bg-purple rounded-xl  px-6 py-3 font-semibold text-white shadow-xl duration-200 hover:scale-105 max-lg:mx-auto max-lg:w-3/4"
           >
             {subscribe.button}
           </button>
-        </div>
+        </form>
       </div>
     );
 }

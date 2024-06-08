@@ -128,6 +128,7 @@ export default async function Page({
                   <Table className="text-red-300">
                     <TableCaption>
                       Domain is misconfigured, add the above in your DNS.
+                      Depending on your provider, it might take a while to update DNS and get the domain working, so refresh the page after a few minutes.
                     </TableCaption>
                     <TableHeader>
                       <TableRow className="*:font-bold *:text-red-400">

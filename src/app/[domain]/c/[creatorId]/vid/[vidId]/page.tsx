@@ -17,6 +17,7 @@ import Link from "next/link";
 import { TiArrowBack } from "react-icons/ti";
 import { useToast } from "~/components/ui/use-toast";
 import { useSession } from "next-auth/react";
+import { MdDashboard } from "react-icons/md";
 
 export interface TranscriptProps {
   videoId: string;
@@ -119,7 +120,7 @@ const Page = () => {
       <div className="video flex h-full w-full flex-col space-y-4  p-8 md:w-3/4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">{transcript.title}</h2>
-          <div className="flex gap-8">
+          <div className="flex  items-center gap-8 ">
             <div
               onClick={() => {
                 const path: string = window.location.pathname;
@@ -127,9 +128,10 @@ const Page = () => {
 
                 router.push(parts[0] ?? "/generate");
               }}
-              className="cursor-pointer"
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 md:border-2"
             >
-              <TiArrowBack className="text-xl" />
+              <MdDashboard className="text-xl" />
+              <span className="hidden md:block">Dashboard</span>
             </div>
             <Link href="/">
               <BiHome className="text-xl" />
