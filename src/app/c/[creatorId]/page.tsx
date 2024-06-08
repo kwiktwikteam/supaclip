@@ -115,6 +115,13 @@ export default async function Page({
           className="pb-24 xl:grid-cols-4"
         />
       </div>
+
+{/* 
+      <footer className="fixed bottom-0 left-0 right-0 min-h-8 z-20 bg-white">
+        <div className="w-[90%] md:w-1/2 mx-auto">
+            
+        </div>
+      </footer>  */}
     </main>
   );
 }

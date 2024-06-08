@@ -56,7 +56,7 @@ const Header = ({ creatorId } : { creatorId : string}) => {
         <div className="w-responsive flex items-center justify-between rounded-full bg-white p-3">
           <div className="flex-center gap-4 text-lg font-semibold">
             <Image src={"/logo.svg"} alt="logo" width={40} height={40} />
-            Supaclip
+            <h1>Supaclip</h1> 
           </div>
           {creatorId ? (
             <Link className="cursor-pointer" href={`/c/${creatorId}`}>

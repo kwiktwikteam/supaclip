@@ -79,6 +79,7 @@ export async function GET(request: Request, { params }: { params: { domain: stri
 
 
 export async function POST(request: Request, { params }: { params: { domain: string } }) {
+   try {
     const allProfiles = await db
     .select()
     .from(profiles)
@@ -99,7 +100,8 @@ export async function POST(request: Request, { params }: { params: { domain: str
     }
     }
 
-    
-    
     return Response.json(response)
+   } catch (error) {
+    return Response.json({status: false, message: "Something went wront! Please Try again later.", error: error.message})
+   } 
 }
