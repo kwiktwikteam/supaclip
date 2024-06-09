@@ -22,12 +22,14 @@ const Hero = async () => {
   
   return (
     <section className="relative min-h-screen space-y-5 pt-40 text-white">
-      <Image
-        src={"/images/hero/bg.png"}
-        alt="hero"
-        layout="fill" 
-        className="absolute left-0 top-0 -z-10 h-full w-full"
-      />
+      <div className="absolute left-0 top-0 -z-10 h-full w-full">
+        <Image
+          src={"/images/hero/bg.png"}
+          alt="hero"
+          layout="fill"
+          className="absolute left-0 top-0 -z-10 h-full w-full"
+        />
+      </div>
 
       {/* ICONS */}
       {/* <Image
@@ -59,7 +61,7 @@ const Hero = async () => {
         className="2xl:opacity-1 absolute z-10 rounded-xl max-xl:hidden lg:right-80 lg:top-80 lg:opacity-50"
       /> */}
 
-      <Title variant="xl" className="z-20">
+      <Title variant="xl" className="z-10">
         {hero.title[0]}
         <br />
         {hero.title[1]}
@@ -69,7 +71,7 @@ const Hero = async () => {
 
       <SubTitle subTitleClass="xl:w-1/3 xl:mx-auto">{hero.subtitle}</SubTitle>
 
-      <div className="space-y-8">
+      <div className="z-20 space-y-8">
         {/* <Button variant='dark' className='mx-auto rounded-xl py-4 px-8'>
                   {hero.button}
                 </Button> */}
@@ -96,12 +98,22 @@ const Hero = async () => {
               <p>{num[0]?.count}+ users are enjoying this for $0</p>
             </div>
           </div>
-          <div className="w-responsive z-50 shadow-gray shadow-t-xl min-h-[70vh] rounded-xl bg-white">
+          <div
+            style={{
+              zIndex: "100 !important",
+            }}
+            className="w-responsive shadow-gray shadow-t-xl z-50 min-h-[70vh]  cursor-pointer rounded-xl bg-white"
+          >
             <iframe
               width="420"
               height="515"
-              className="h-full min-h-[70vh] w-full rounded-lg"
+              title="Supaclip Walkthrough"
+              className="z-50 h-full min-h-[70vh] w-full rounded-lg"
               src={`https://www.youtube.com/embed/fBqrn4nXFlc`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              style={{
+                zIndex: "100 !important",
+              }}
             />
           </div>
         </div>
