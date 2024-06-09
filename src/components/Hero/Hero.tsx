@@ -96,7 +96,7 @@ const Hero = async () => {
               <p>{num[0]?.count}+ users are enjoying this for $0</p>
             </div>
           </div>
-          <div className="w-responsive shadow-gray shadow-t-xl min-h-[70vh] rounded-xl bg-white">
+          <div className="w-responsive z-50 shadow-gray shadow-t-xl min-h-[70vh] rounded-xl bg-white">
             <iframe
               width="420"
               height="515"
