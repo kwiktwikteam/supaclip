@@ -8,7 +8,7 @@ import { env } from "~/env";
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
 const prompt =
-  "Analyze this paragraph which is a transcript of a video. Answer user questions based solely on the provided text, avoiding external knowledge. Given Transcript:";
+  "Analyze this paragraph which is a transcript of a video, and refer to it as video in your answers as well not text or transcript. Make sure the answers are point-wise and not a big paragraph. Answer user questions based solely on the provided text, avoiding external knowledge. Given Transcript:";
 
 
 export const textTotext =async (inp: string, para: string) =>{

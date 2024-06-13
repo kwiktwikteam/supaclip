@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { CgClose } from 'react-icons/cg';
 import { IoMdSend } from "react-icons/io";
 import { set } from 'zod';
-import { TranscriptProps } from '~/app/(template)/video/[id]/page';
+import { type TranscriptProps } from '~/app/(template)/video/[id]/page';
 import { textTotext } from '~/lib/helpers/gemini';
 
 
@@ -55,6 +55,7 @@ const Chat = ({
   useEffect(() => {
     let text = "";
     transcripts.forEach((item) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       text += item.transcriptText;
     });
 
@@ -73,7 +74,7 @@ const Chat = ({
               onClick={() => setshowMobileChat(!showMobileChat)}
             />
             <h2 className="text-xl font-semibold ">Ask Expert</h2>
-            {(!chatResponse && !isLoading) && (
+            {!chatResponse && !isLoading && (
               <div className="flex-1 space-y-4 py-10">
                 {response.map((item, index) => {
                   return (
@@ -86,9 +87,11 @@ const Chat = ({
             )}
 
             {isLoading && (
-              <div className="h-[50px] w-[50px] rounded-full border-t-2 bg-transparent animate-spin mt-5"></div>
+              <div className="mt-5 h-[50px] w-[50px] animate-spin rounded-full border-t-2 bg-transparent"></div>
             )}
-            <div className="flex-1 space-y-4 py-10">{chatResponse}</div>
+            <div className="flex-1 space-y-4 overflow-y-auto max-h-[90vh] py-10">
+              {chatResponse}
+            </div>
             <div className=" flex-center-between w-full rounded-full border-2 border-gray-400 px-4 py-2">
               <input
                 value={input}
@@ -127,7 +130,7 @@ const Chat = ({
                 })}
               </div>
             )}
-            <div className="flex-1 space-y-4 py-10">{chatResponse}</div>
+            <div className="flex-1 max-h-[90vh] overflow-y-auto space-y-4 py-10">{chatResponse}</div>
             <div className=" flex-center-between w-full rounded-full border-2 border-gray-400 px-4 py-2">
               <input
                 value={input}

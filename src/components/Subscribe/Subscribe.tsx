@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { FormEventHandler, useState } from 'react'
 import Title, { SubTitle } from '../ui/Title'
 import content from '~/config/content'
 import Image from "next/legacy/image"
@@ -13,7 +13,7 @@ const Subscribe = () => {
 
     const [email, setemail] = useState("")
     const { toast } = useToast()
-    const handleSubmit = async (e: SubmitEvent) => {
+    const handleSubmit = async (e: FormEventHandler) => {
         e.preventDefault();
         if(!email.toString().includes("@")){ 
             toast({

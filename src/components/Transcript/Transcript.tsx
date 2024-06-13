@@ -10,7 +10,7 @@ const Transcript = ({ transcripts, loading }: { transcripts: TranscriptProps[], 
 
 
   return (
-    <div className="transcript relative max-h-[400px] overflow-y-scroll md:space-y-5">
+    <div className="transcript relative  overflow-y-scroll md:space-y-5">
       {/* <div className="flex-center-between">
         <h2 className="cursor-pointer text-xl font-semibold lg:text-2xl">
           Transcript
@@ -35,22 +35,21 @@ const Transcript = ({ transcripts, loading }: { transcripts: TranscriptProps[], 
         )}
         {transcripts.map((item: TranscriptProps, index: number) => {
           return (
-            <div
-              key={index}
-              className="flex flex-wrap items-center gap-4 md:gap-8"
-            >
+            <div key={index} className="flex flex-wrap pb-2 my-4 items-center border-b border-gray-700 ">
               {/* 00:00 - - alksdjflask;jdf */}
-              <div className="md:text-md font-mono text-sm font-bold">
-                {formatTime(parseFloat(item.offset))} -{" "}
-                {formatTime(
-                  parseFloat(item.offset.toString()) +
-                    parseFloat(item.duration.toString()),
-                )}
-                :{" "}
-              </div>
+              <div className="flex flex-col md:flex-row gap-2 md:items-center">
+                <div className="text-nowrap md:text-md font-mono text-sm font-bold">
+                  {formatTime(parseFloat(item.offset))}-
+                  {formatTime(
+                    parseFloat(item.offset.toString()) +
+                      parseFloat(item.duration.toString()),
+                  )}
+                  :{" "}
+                </div>
 
-              <div className="leading-relaxed tracking-wider text-white/80">
-                {item.transcriptText}
+                <div className="text-md leading-relaxed tracking-wider text-white/80">
+                  {item.transcriptText}
+                </div>
               </div>
             </div>
           );
