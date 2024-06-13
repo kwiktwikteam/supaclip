@@ -13,7 +13,8 @@ const Subscribe = () => {
 
     const [email, setemail] = useState("")
     const { toast } = useToast()
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: SubmitEvent) => {
+        e.preventDefault();
         if(!email.toString().includes("@")){ 
             toast({
                 title: "Please Enter a Valid Email"

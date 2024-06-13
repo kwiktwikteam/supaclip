@@ -12,7 +12,7 @@ const prompt =
 
 
 export const textTotext =async (inp: string, para: string) =>{
-  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   let text, result, response;
   try {
     if (para) {
