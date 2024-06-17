@@ -15,6 +15,9 @@ export const metadata = {
   title: "SupaClip Pro",
   description: "SupaClip allow you to instantly create a website from your video with a AI assistant to solve your problems",
   icons: [{ rel: "icon", url: "/logo.svg" }],
+  twitter: {
+    card: "summary_large_image",
+  }
 };
 
 export default function RootLayout({

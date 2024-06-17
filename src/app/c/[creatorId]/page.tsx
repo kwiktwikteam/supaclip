@@ -1,5 +1,6 @@
 import { desc, eq } from "drizzle-orm";
 import { HomeIcon, Settings, Video } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -10,6 +11,28 @@ import Button from "~/components/ui/Button";
 import { getUser } from "~/lib/helpers/transcript";
 import { db } from "~/server/db";
 import { transcriptions } from "~/server/db/schema";
+
+
+export async function generateMetadata({
+  params, 
+}: {
+  params: {
+    creatorId: string;
+  };
+}): Promise<Metadata> {
+  const user = await getUser(params.creatorId);
+  if(!user) {
+    return redirect("/")
+  }
+  
+  return{ 
+    title: `Dashboard | ${user.name}'s Supaclips`, 
+    description: `Explore all supaclips created by ${user.name}.`,
+  }
+ 
+}
+
+
 
 export default async function Page({
   params,
